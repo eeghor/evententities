@@ -72,68 +72,26 @@ class EventFeatureFactory:
 	"""
 	def __init__(self):
 
-		self.DATA_DIR = os.path.join(os.path.curdir, 'data')
-
-		self._teams = defaultdict()
-		self._sport_abb = defaultdict()
-
-		self.PREFIXES = {'teams': {'prefix': 'tm_', 'dict': self._teams},
-						'sport-abbreviations': {'prefix': 'abb_', 'dict': self._sport_abb}}
-
 		self._ev_id = None
 		self._description = None
 		self._labels = defaultdict()
 
-		"""
-		[
-  			{
-  			  "name": "afghanistan",
-  			  "other_names": null,
-  			  "abbr": "afg"
-  			},
-		"""
-		countries = json.load(open('/Users/ik/Data/country-abbreviations/countries.json','r'))
+		self.DATA_DIR = os.path.join(os.path.curdir, 'data')
 
-		self._countries =  {_ for _ in chain([' '.join([w for w in c['name'].lower().split() if w not in {'and', '&', 'the'}]) 
-																										for c in countries], 
-														[v for c in countries if c['other_names'] for v in c['other_names']],
-														[c['abbr'] for c in countries])}
-		# print(self._countries)
-
-		self._venue_types = {'club', 'centre', 'center', 'studio', 'stadium', 'grounds', 'park', 'pub', 
-							 'school', 'bar', 'oval', 'showgrounds', 'court', 'arena', 'zoo', 'gallery', 'museum', 
-							 'garden', 'gardens', 'theatre', 'theater', 'lodge', 'field', 'complex', 'cafe', 'church',
-								'cathedral', 'house'}
-
-		"""
-		"a": [
-    			{
-    			  "name": "aarons pass",
-    			  "state": "nsw",
-    			  "postcode": 2850
-    			}
-		"""
-		self._suburbs = json.load(open('/Users/ik/Data/suburbs-and-postcodes/aus_suburbs_auspost_APR2017.json','r'))
-
-		self.state_abbr = {'nsw': 'new south wales', 
-							'vic': 'victoria',
-							'tas': 'tasmania',
-							'sa': 'south australia',
-							'wa': 'western australia',
-							'act': 'australian capital territory',
-							'nt': 'northern territory',
-							'qld': 'queensland'}
-
-		self.city_variants = {'sydney': ['syd'], 
-								'melbourne': ['mel', 'melb'],
-								'brisbane': ['bris', 'brisb'],
-								'gold coast': ['gc'],
-								'adelaide': ['adel'],
-								'canberra': ['canb'],
-								'mount': ['mt']}
-
-		self._promoters = {line.lower().strip() for line in open('/Users/ik/Data/promoters/promoters.txt','r').readlines()}
-		# print(self._promoters)
+		# load data
+		self._teams = json.load(open(os.path.join(self.DATA_DIR, 'data_teams.json')))
+		self._sport_abb = json.load(open(os.path.join(self.DATA_DIR, 'data_sport-abbreviations.json')))
+		self._musicals = json.load(open(os.path.join(self.DATA_DIR, 'data_musicals.json')))
+		self._venue_types = {_.strip() for _ in open(os.path.join(self.DATA_DIR, 'data_venue_types.txt')).readlines() if _.strip()}
+		self._countries =  json.load(open(os.path.join(self.DATA_DIR, 'data_countries.json')))
+		self._suburbs = json.load(open(os.path.join(self.DATA_DIR, 'data_suburbs.json')))
+		self._state_abb = json.load(open(os.path.join(self.DATA_DIR, 'data_state-abbreviations.json')))
+		self._abb = json.load(open(os.path.join(self.DATA_DIR, 'data_abbreviations.json')))
+		self._promoters = json.load(open(os.path.join(self.DATA_DIR, 'data_promoters.json')))
+		self._comedians = json.load(open(os.path.join(self.DATA_DIR, 'data_comedians.json')))
+		self._opera_singers = json.load(open(os.path.join(self.DATA_DIR, 'data_opera-singers.json')))
+		self._companies = json.load(open(os.path.join(self.DATA_DIR, 'data_companies.json')))
+		self._movies = json.load(open(os.path.join(self.DATA_DIR, 'data_movies.json')))
 
 		# sport names are keys
 		_sports = json.load(open('/Users/ik/Data/sports/sports-identifiers/sports-identifiers.json','r'))
@@ -150,19 +108,9 @@ class EventFeatureFactory:
 		
 		self.sport_teams = {p for s in _sports if ('nrl' in s) or ('afl' in s) for p in _sports[s]['key_participants']}
 
-		self.comedians = {line.lower().strip() for line in open('/Users/ik/Data/comedians/comedians_1515.txt','r').readlines()}
-		
-		self.opera_singers = {line.lower().strip() for line in open('/Users/ik/Data/opera-singers/opera_singers_1873.txt','r').readlines()}
-
 		self.purchase_types = 'fee merchandise parking upsell'.split()
 
-		self.musicals = set(pd.read_csv('/Users/ik/Data/musicals/musicals_.csv')['name'])
-
-		self.movies = {m.split(',')[0].split('(')[0].lower().strip() for m in set(pd.read_csv('/Users/ik/Data/movies/movies.csv')['title'])}
-
 		self.major_genres = 'rock pop jazz soul funk folk blues'.split()
-
-		self.companies = set(pd.read_csv('/Users/ik/Data/businesses/ASXListedCompanies.csv', skiprows=3).iloc[:, 0].str.lower())
 
 		self.event_types = """
 							fanfare fireworks grandstand occurrence pageantry panoply representation shine showboat
@@ -178,8 +126,6 @@ class EventFeatureFactory:
   							expo showboat
 							""".split()
 
-		self.sport_variants = {'united': 'utd', 'city': 'cty', 'fc': 'football club'}
-
 		self.artists = json.load(open('/Users/ik/Data/music/artist_names/artists_.json','r'))
 
 		# print(self.sport_teams)
@@ -189,27 +135,6 @@ class EventFeatureFactory:
 
 		self.labels = defaultdict()
 
-	def build_dict(self, what):
-
-		dir_start = '/'.join([self.DATA_DIR, what])
-
-		for p in os.walk(top=dir_start):
-
-			if p[2]:
-
-				pth = p[0]
-				file_name = p[2].pop()	
-
-				if file_name.startswith(self.PREFIXES[what]['prefix']):
-					
-					_, _, _, sport, country, league = pth.split('/')
-	
-					for team in open(os.path.join(pth, file_name),'r').readlines():
-	
-						if len(team.strip()) > 1:
-							self.PREFIXES[what]['dict'][team.strip()] = {'sport': sport, 'country': country, 'league': league}
-
-		return self
 
 	def _list_to_alph_dict(self, lst):
 
@@ -376,7 +301,7 @@ class EventFeatureFactory:
 
 	def normalize_musicals(self):
 
-		self._musicals = self._list_to_alph_dict({_c for _c in {self._normalize_title(c) for c in self.musicals} if _c})
+		self._musicals = self._list_to_alph_dict({_c for _c in {self._normalize_title(c) for c in self._musicals} if _c})
 
 		return self
 
