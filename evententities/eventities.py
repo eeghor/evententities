@@ -73,8 +73,12 @@ class EventFeatureFactory:
 	def __init__(self):
 
 		self.DATA_DIR = os.path.join(os.path.curdir, 'data')
+
 		self._teams = defaultdict()
-		self.PREFIXES = {'teams': 'tm_'}
+		self._sport_abb = defaultdict()
+
+		self.PREFIXES = {'teams': {'prefix': 'tm_', 'dict': self._teams},
+						'sport-abbreviations': {'prefix': 'abb_', 'dict': self._sport_abb}}
 
 		self._ev_id = None
 		self._description = None
@@ -187,25 +191,23 @@ class EventFeatureFactory:
 
 	def build_dict(self, what):
 
-		if what == 'teams':
+		dir_start = '/'.join([self.DATA_DIR, what])
 
-			dir_start = '/'.join([self.DATA_DIR, what])
+		for p in os.walk(top=dir_start):
 
-			for p in os.walk(top=dir_start):
+			if p[2]:
 
-				if p[2]:
+				pth = p[0]
+				file_name = p[2].pop()	
 
-					pth = p[0]
-					file_name = p[2].pop()	
+				if file_name.startswith(self.PREFIXES[what]['prefix']):
+					
+					_, _, _, sport, country, league = pth.split('/')
 	
-					if file_name.startswith(self.PREFIXES[what]):
-						
-						_, _, _, sport, country, league = pth.split('/')
-		
-						for team in open(os.path.join(pth, file_name),'r').readlines():
-		
-							if len(team.strip()) > 1:
-								self._teams[team.strip()] = {'sport': sport, 'country': country, 'league': league}
+					for team in open(os.path.join(pth, file_name),'r').readlines():
+	
+						if len(team.strip()) > 1:
+							self.PREFIXES[what]['dict'][team.strip()] = {'sport': sport, 'country': country, 'league': league}
 
 		return self
 
@@ -508,9 +510,9 @@ if __name__ == '__main__':
 	 3th final jam    bugsy malone taxi driver   0 young frankenstein  depeche Mode and also (*) butterfly eFFect
 	"""
 
-	eff = EventFeatureFactory().build_dict(what='teams')
+	eff = EventFeatureFactory().build_dict(what='teams').build_dict(what='sport-abbreviations')
 
-	# print(eff._teams)
+	print(eff._sport_abb)
 
 	# print(eff.artists)
 
