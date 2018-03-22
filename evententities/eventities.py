@@ -95,14 +95,16 @@ class EventFeatureFactory:
 						'data_state-abbreviations.json', 
 							'data_sport-abbreviations.json']]
 		# sports
-		self._teams, self._sport_names, self._tournaments, self._tournament_types = [json.load(open(os.path.join(self.DATA_DIR, f))) 
+		self._teams, self._sport_names, self._tournaments, self._tournament_types, self._sponsors = [json.load(open(os.path.join(self.DATA_DIR, f))) 
 			for f in ['data_teams.json', 
 						'data_sport-names.json', 
 							'data_tournaments.json',
-								'data_tournament-types.json']]
+								'data_tournament-types.json',
+									'data_sponsors.json']]
 		
 		self._musicals = json.load(open(os.path.join(self.DATA_DIR, 'data_musicals.json')))
 		self._venue_types = json.load(open(os.path.join(self.DATA_DIR, 'data_venue-types.json')))
+
 		self._countries =  json.load(open(os.path.join(self.DATA_DIR, 'data_countries.json')))
 		self._suburbs = json.load(open(os.path.join(self.DATA_DIR, 'data_suburbs.json')))
 		
@@ -112,19 +114,20 @@ class EventFeatureFactory:
 
 		self._comedians = json.load(open(os.path.join(self.DATA_DIR, 'data_comedians.json')))
 		self._opera_singers = json.load(open(os.path.join(self.DATA_DIR, 'data_opera-singers.json')))
+
 		self._companies = json.load(open(os.path.join(self.DATA_DIR, 'data_companies.json')))
+
 		self._movies = json.load(open(os.path.join(self.DATA_DIR, 'data_movies.json')))
 		
-		self._sponsors = json.load(open(os.path.join(self.DATA_DIR, 'data_sponsors.json')))
 		self._purchase_types = json.load(open(os.path.join(self.DATA_DIR, 'data_purchase-types.json')))
 
-		self._dic = {'suburbs': self._suburbs, 'musicals': self._musicals, 
-						'artists': self._artists, 'movies': self._movies,
-						'promoters': self._promoters, 'opera_singers': self._opera_singers,
-						'countries': self._countries, 'teams': self._teams,
-						'sport_names': self._sport_names, 'venue_types': self._venue_types,
-						'major_music_genres': self._major_music_genres, 'tournament_types': self._tournament_types,
-						'purchase_types': self._purchase_types}
+		self._NES = {'suburbs': self._suburbs, 'musicals': self._musicals, 
+					 'artists': self._artists, 'movies': self._movies,
+					 'promoters': self._promoters, 'opera_singers': self._opera_singers,
+					 'countries': self._countries, 'teams': self._teams,
+					 'sport_names': self._sport_names, 'venue_types': self._venue_types,
+					 'major_music_genres': self._major_music_genres, 'tournament_types': self._tournament_types,
+					 'purchase_types': self._purchase_types, 'comedians': self._comedians}
 
 	def _deabbreviate(self, st):
 		"""
@@ -187,6 +190,7 @@ class EventFeatureFactory:
 
 		weekdays = {i: d for i, d in zip([i for i in range(7)], 
 							['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'])}
+
 		ts = arrow.get(st, 'YYYY-MM-DD HH:mm:ss')
 		hour = ts.hour
 
@@ -201,7 +205,7 @@ class EventFeatureFactory:
 
 		_s = self._normalize(st)
 
-		dk = self._dic[what]
+		dk = self._NES[what]
 
 		if not _s:
 			return None
@@ -227,7 +231,8 @@ class EventFeatureFactory:
 if __name__ == '__main__':
 
 	e = Event('123ddf')
-	e.description = '0222ds TOMORROW performance by MAGDA OLIVERO plus (** Arsenal at ANZ stadium, NZ -- 20/01/2015 : gordon 2064'
+	e.description = """0222ds TOMORROW performance by MAGDA OLIVERO plus (** Arsenal at ANZ stadium, 
+						NZ -- 20/01/2015 : gordon 2064"""
 	
 	eff = EventFeatureFactory()
 	
