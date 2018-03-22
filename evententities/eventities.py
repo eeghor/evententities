@@ -108,112 +108,79 @@ class EventFeatureFactory:
 		"""
 		unfold abbreviations in string st
 		"""
+		_st = st
 		# first replace full state names by abbreviations;
 		for s in self._state_abb:
-			st = st.replace(s, self._state_abb[s])
+			_st = _st.replace(s, self._state_abb[s])
 		# other dictionaries map single-word abbreviations so we can just do split
-		return ' '.join([self._abb.get(self._sport_abb.get(_, _),_) for _ in st.strip().split()])
+		return ' '.join([self._abb.get(self._sport_abb.get(_, _),_) for _ in _st.strip().split()])
 
-	def _list_to_alph_dict(self, lst):
-
-		d = defaultdict()
-
-		# remove the, a
-		for l in lst:
-			_ = l.replace('the ','').replace('a ','').replace('"','').strip()
-			if len(_) > 1:
-				_l1 = _[0]
-				if _l1 in d:
-					d[_l1].append(_)
-				else:
-					d[_l1] = [_]
-		for i in d:
-			d[i] = sorted(d[i])
-
-		return d
-
-
-	def _unfold_states(self, st):
-
-		for ab, s in self.state_abbr.items():
-			st = st.replace(s, ab)
-
-		return st
-
-	def _unfold_cities(self, st):
-		
-		for cit in self.city_variants:
-			for alt in self.city_variants[cit]:
-				st = re.sub(r'\b{}\b'.format(alt), cit, st.lower())
-
-		return st
-
-	def _unfold_teams(self, st):
-
-		st = re.sub(r'\b{}\b'.format(self.sport_variants[cn]), cn, st.lower())
-
-		return st
-	
-	def _remove_punctuation(self, st):
-
-		if not isinstance(st, str):
-			return None
-
-		_ = [_ for _ in self.re_punct.sub(' ', st).split() if len(_) > 0]
-
-		return ' '.join(_) if _ else _
-
-	def _remove_nonalphanum(self, st):
-
-		if not isinstance(st, str):
-			return None
-
-		_ = ''.join([w for w in st if w.isalnum() or w.isspace()]).strip()
-
-		return ''.join(_) if len(_) > 0 else None
-
-	def _remove_nonalpha(self, st):
-
-		if not isinstance(st, str):
-			return None
-
-		_ = ''.join([w for w in st if w.isalpha() or w.isspace()]).strip()
-
-		return ''.join(_) if len(_) > 0 else None
-
-	def _remove_articles(self, st):
-
-		if not isinstance(st, str):
-			return None
-
-		_ = [w for w in st.lower().split() if w not in {'and', 'the', 'a'}]
-
-		return ' '.join(_) if _ else None
-
-	def _normalize_title(self, title_str):
+	def _normalize(self, st, st_type):
 		"""
-		assuming title_str is a title such as a movie title or play title, do specialized normalization
+		normalize string st depending on its type st_type
 		"""
-		title_str = title_str.lower()
+		# firstly, lower case, replace separators with white spaces, remove all non-alphanumeric 
+		# and single white space between words - this applies to all
 
-		if '(' in title_str:
-			p1, p2 = title_str.split('(')
-			_ = ' '.join((p1 + p2.split(')')[-1]).split())
-			title_str = _ if len(_) > 0 else None
-
-		if (title_str) and (len(title_str) > 0):
-			title_str = title_str.replace('-',' ').strip()
-		else:
+		if not st:
 			return None
 
-		if (title_str) and (len(title_str) > 0):
-			title_str = self._remove_punctuation(self._remove_nonalphanum(title_str))
-		else:
+		_st = st
+		_st = _st.lower()
+		_st = _st.replace('-',' ').replace('_',' ').replace(".",' ').replace('/',' ')
+
+		if st_type in {'suburbs'}:
+			_st = ''.join([w for w in _st if w.isalpha() or w.isspace()])
+		elif st_type in {'musicals', 'artists'}:
+			_st = ''.join([w for w in _st if w.isalnum() or w.isspace()])
+
+		if not _st:
 			return None
 
-		title_str = self._remove_articles(title_str)
+		_st = ' '.join(_st.split())
 
-		return title_str
+		# remove 'a', 'the', 'and', '&'
+		_st = ' '.join([w for w in _st.split() if w not in ['the', 'a', '&', 'and']])
+
+		_st = self._deabbreviate(_st)
+
+		return _st if _st else None
+
+
+	# def _remove_punctuation(self, st):
+
+	# 	if not isinstance(st, str):
+	# 		return None
+
+	# 	_ = [_ for _ in self.re_punct.sub(' ', st).split() if len(_) > 0]
+
+	# 	return ' '.join(_) if _ else _
+
+
+	# def _normalize_title(self, title_str):
+	# 	"""
+	# 	assuming title_str is a title such as a movie title or play title, do specialized normalization
+	# 	"""
+	# 	title_str = title_str.lower()
+
+	# 	if '(' in title_str:
+	# 		p1, p2 = title_str.split('(')
+	# 		_ = ' '.join((p1 + p2.split(')')[-1]).split())
+	# 		title_str = _ if len(_) > 0 else None
+
+	# 	if (title_str) and (len(title_str) > 0):
+	# 		title_str = title_str.replace('-',' ').strip()
+	# 	else:
+	# 		return None
+
+	# 	if (title_str) and (len(title_str) > 0):
+	# 		title_str = self._remove_punctuation(self._remove_nonalphanum(title_str))
+	# 	else:
+	# 		return None
+
+	# 	title_str = self._remove_articles(title_str)
+
+	# 	return title_str
 
 
 	def find_matches(self, st, items):
@@ -245,24 +212,33 @@ class EventFeatureFactory:
 					'afternoon' if (12 <= hour < 18) else 
 						'evening' if (18 <= hour < 21) else 'night')
 
-	def get_suburb(self, st):
+	def find_alphabetic(self, st, what):
 		"""
-		find any suburbs in the string
+		find something that is available in an alphabetical dictionary in the string
 		"""
-		_s = self._remove_nonalpha(st.lower())
+
+		_s = self._normalize(st, what)
+
+		if what == 'suburbs':	
+			dk = self._suburbs
+		elif what == 'musicals':
+			dk = self._musicals
+		elif what == 'artists':
+			dk = self._artists
 
 		if not _s:
 			return None
 
 		found = set()
+		words = _s.split()
 
-		for i, w in enumerate(_s.split()):
+		for i, w in enumerate(words):
 
 			_l1 = w[0]
 
 			if _l1.isalpha():
 
-				_cands = {s['name'] for s in self._suburbs[_l1] if len(s['name'].split()) <= len(_s[i:])}
+				_cands = {s for s in dk[_l1] if len(s.split()) <= len(words[i:])}
 
 				if _cands:
 					found.update(self.find_matches(_s, _cands))
@@ -415,20 +391,25 @@ if __name__ == '__main__':
 
 	eff = EventFeatureFactory()
 	# .build_dict(what='teams').build_dict(what='sport-abbreviations')
+	# print(eff._normalize('@13 2211   __ clown and alisia keys on 12/12/2018 -!!'))
+	# print(eff._deabbreviate('this new south wales team played in bris yesterday'))
 
-	print(eff._deabbreviate('this new south wales team played in bris yesterday'))
+	s = 'only213 11 -oq02i    emu pLains -- chatswood -- phantom of the opera 98!` iron   madEIN*'
 
+	print(eff.find_alphabetic(s, 'suburbs'))
+	print(eff.find_alphabetic(s, 'musicals'))
+	print(eff.find_alphabetic(s, 'artists'))
 	# print(eff.artists)
 
 	# eff.find_matches(e.description, eff._countries)
 	# print(f'this starts {eff.get_event_time(e.description)}')
 
-	# print(eff.get_suburb(e.description))
+	# print(eff.find_alphabetic(e.description))
 	# print(f'was: {e.description}')
 	# print(f'now: {eff._remove_punctuation(e.description)}')
 
 	# eff.get_countries(e.description)
-	# eff.get_suburb(e.description)
+	# eff.find_alphabetic(e.description)
 	# eff.get_venue_types(e.description)
 	# eff.get_tournament_type(e.description)
 	# eff.get_comedians(e.description)
