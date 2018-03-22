@@ -1,8 +1,0 @@
-rock
-pop
-jazz
-soul
-funk
-folk
-blues
-rnb
