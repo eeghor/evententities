@@ -1,0 +1,10 @@
+cup
+championship
+trophy
+tour
+tournament
+series
+league
+games
+premiership
+race

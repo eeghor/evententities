@@ -38,7 +38,6 @@ class String:
 		else:
 			self.data[instance] = value
 
-
 class Event:
 	"""
 	representation of a basic event
@@ -81,6 +80,8 @@ class EventFeatureFactory:
 		# load data
 		self._teams = json.load(open(os.path.join(self.DATA_DIR, 'data_teams.json')))
 		self._sport_abb = json.load(open(os.path.join(self.DATA_DIR, 'data_sport-abbreviations.json')))
+		self._abb = json.load(open(os.path.join(self.DATA_DIR, 'data_abbreviations.json')))
+		self._sport_names = {_.strip() for _ in open(os.path.join(self.DATA_DIR, 'data_sport-names.txt')).readlines() if _.strip()}
 		self._musicals = json.load(open(os.path.join(self.DATA_DIR, 'data_musicals.json')))
 		self._venue_types = {_.strip() for _ in open(os.path.join(self.DATA_DIR, 'data_venue_types.txt')).readlines() if _.strip()}
 		self._countries =  json.load(open(os.path.join(self.DATA_DIR, 'data_countries.json')))
@@ -92,49 +93,26 @@ class EventFeatureFactory:
 		self._opera_singers = json.load(open(os.path.join(self.DATA_DIR, 'data_opera-singers.json')))
 		self._companies = json.load(open(os.path.join(self.DATA_DIR, 'data_companies.json')))
 		self._movies = json.load(open(os.path.join(self.DATA_DIR, 'data_movies.json')))
-
-		# sport names are keys
-		_sports = json.load(open('/Users/ik/Data/sports/sports-identifiers/sports-identifiers.json','r'))
-
-		self.sports = set(_sports)
-		# sports abbreviations
-		self.sport_abbr = {a for s in _sports if 'abbreviations' in _sports[s] for a in _sports[s]['abbreviations'] }
-		# tournaments
-		self.tournaments = {n for s in _sports for c in _sports[s]['competitions'] for n in _sports[s]['competitions'][c]}
-
-		self.tournament_types = set('cup championship test trophy tour tournament series league games premiership race'.split())
-
-		self.sport_sponsors = {sp for s in _sports if 'sponsors' in _sports[s] for sp in _sports[s]['sponsors']}
-		
-		self.sport_teams = {p for s in _sports if ('nrl' in s) or ('afl' in s) for p in _sports[s]['key_participants']}
-
-		self.purchase_types = 'fee merchandise parking upsell'.split()
-
-		self.major_genres = 'rock pop jazz soul funk folk blues'.split()
-
-		self.event_types = """
-							fanfare fireworks grandstand occurrence pageantry panoply representation shine showboat
-  							showing sight splash view anniversary commemoration competition fair feast gala
-  							holiday carnival entertainment festivities fete fiesta jubilee merrymaking trear
-  							bazar celebration display exhibit festival market pageant
-  							show centennial occasion spectacle act concert portrayal production burlesque
-  							ceremony gig matinee recital rehearsal revue rigmarole rite special
-  							spectacle stunt stage circus celebration barbecue amusement entertainment 
-  							prom soiree function ball banquet festivity feast reception fun get-together 
-  							cocktails luncheon occasion pageant parade appearance spectacle presentation
-  							display exposition occurrence showing panoply manifestation fanfare pageantry
-  							expo showboat
-							""".split()
-
-		self.artists = json.load(open('/Users/ik/Data/music/artist_names/artists_.json','r'))
-
-		# print(self.sport_teams)
-		# print(f'total teams: {len(self.sport_teams)}')
+		self._tournaments = json.load(open(os.path.join(self.DATA_DIR, 'data_tournaments.json')))
+		self._tournament_types = {_.strip() for _ in open(os.path.join(self.DATA_DIR, 'data_tournament-types.txt')).readlines() if _.strip()}
+		self._sponsors = json.load(open(os.path.join(self.DATA_DIR, 'data_sponsors.json')))
+		self._purchase_types = {_.strip() for _ in open(os.path.join(self.DATA_DIR, 'data_purchase-types.txt')).readlines() if _.strip()}
+		self._mojor_music_genres = {_.strip() for _ in open(os.path.join(self.DATA_DIR, 'data_major_music-genres.txt')).readlines() if _.strip()}
+		self._artists = json.load(open(os.path.join(self.DATA_DIR, 'data_artists.json')))
 
 		self.re_punct = re.compile('[' + '|'.join([re.escape(p) for p in string.punctuation]) + ']')
 
 		self.labels = defaultdict()
 
+	def _deabbreviate(self, st):
+		"""
+		unfold abbreviations in string st
+		"""
+		# first replace full state names by abbreviations;
+		for s in self._state_abb:
+			st = st.replace(s, self._state_abb[s])
+		# other dictionaries map single-word abbreviations so we can just do split
+		return ' '.join([self._abb.get(self._sport_abb.get(_, _),_) for _ in st.strip().split()])
 
 	def _list_to_alph_dict(self, lst):
 
@@ -435,9 +413,10 @@ if __name__ == '__main__':
 	 3th final jam    bugsy malone taxi driver   0 young frankenstein  depeche Mode and also (*) butterfly eFFect
 	"""
 
-	eff = EventFeatureFactory().build_dict(what='teams').build_dict(what='sport-abbreviations')
+	eff = EventFeatureFactory()
+	# .build_dict(what='teams').build_dict(what='sport-abbreviations')
 
-	print(eff._sport_abb)
+	print(eff._deabbreviate('this new south wales team played in bris yesterday'))
 
 	# print(eff.artists)
 
