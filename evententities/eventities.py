@@ -121,6 +121,8 @@ class EventFeatureFactory:
 		
 		self._purchase_types = json.load(open(os.path.join(self.DATA_DIR, 'data_purchase-types.json')))
 
+		self._artists_popular = {a.strip() for a in open(os.path.join(self.DATA_DIR, 'artists_popular.txt')).readlines() if a.strip()}
+
 		self._NES = {'suburbs': self._suburbs, 'musicals': self._musicals, 
 					 'artists': self._artists, 'movies': self._movies,
 					 'promoters': self._promoters, 'opera_singers': self._opera_singers,
@@ -203,6 +205,8 @@ class EventFeatureFactory:
 		find something that is available in an alphabetical dictionary in the string
 		"""
 
+		assert what in self._NES, f'unfortunately, {what} is not supported'
+
 		_s = self._normalize(st)
 
 		dk = self._NES[what]
@@ -231,18 +235,24 @@ class EventFeatureFactory:
 if __name__ == '__main__':
 
 	e = Event('123ddf')
-	e.description = """0222ds TOMORROW performance by MAGDA OLIVERO plus (** Arsenal at ANZ stadium, 
-						NZ -- 20/01/2015 : gordon 2064"""
+	e.description = """0222ds TOMORROW performance by MAGDA OLIVERO plus guns'n' roses (** Arsenal at ANZ stadium, museum  
+						NZ -- 20/01/2015 : gordon 2064 also Bon Jovi so its Somalia & soccer at Lane  cove"""
 	
 	eff = EventFeatureFactory()
 	
 	t0 = time.time()
 
-	for i in range(10000):
-		for _ in eff._dic:
-			e._labels[_] = eff.find(e.description, _)
+	print('countries:', eff.find(e.description, 'countries'))
+
+	print('sport_names:', eff.find(e.description, 'sport_names'))
+
+	print('suburbs:', eff.find(e.description, 'suburbs'))
+
+	print('artists:', eff.find(e.description, 'artists') & eff._artists_popular)
+
+	print('venues:', eff.find(e.description, 'venue_types'))
 
 	print(f'time: {time.time() - t0} sec')
 	
-	print(e._labels)
+	# print(e._labels)
 
