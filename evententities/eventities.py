@@ -8,6 +8,18 @@ import string
 import re
 import os
 import time
+import enchant
+from typing import NamedTuple
+
+class Artist(NamedTuple):
+
+	name: str
+	words_in_name: float
+	uncommon_words_in_name: float
+	popularity: float
+	performed_in_australia: float
+	score: float=0
+
 
 class String:
 
@@ -87,6 +99,8 @@ class EventFeatureFactory:
 		self._description = None
 		self._labels = defaultdict()
 
+		self.spell_checker = enchant.Dict("en_US")
+
 		self.DATA_DIR = os.path.join(os.path.curdir, 'data')
 
 		# abbreviations
@@ -121,7 +135,9 @@ class EventFeatureFactory:
 		
 		self._purchase_types = json.load(open(os.path.join(self.DATA_DIR, 'data_purchase-types.json')))
 
-		self._artists_popular = {a.strip() for a in open(os.path.join(self.DATA_DIR, 'artists_popular.txt')).readlines() if a.strip()}
+		self._artists_popular = {self._normalize(a) for a in open(os.path.join(self.DATA_DIR, 'top_artists.txt')).readlines() if a.strip()}
+
+		self._aus_gig_artists = {self._normalize(a) for a in open(os.path.join(self.DATA_DIR, 'aus_gig_artists.txt')).readlines() if a.strip()}
 
 		self._NES = {'suburbs': self._suburbs, 'musicals': self._musicals, 
 					 'artists': self._artists, 'movies': self._movies,
@@ -232,27 +248,47 @@ class EventFeatureFactory:
 
 		return found if found else None
 
+	def rank_artists(self, artist_list):
+		"""
+		which artist candidates on the list artist_list are more likely to be artist?
+		"""
+
+		MAX_ART = 3   # return up to 3 top ranked artists
+
+		bonuses = {'words_in_name': 0.5,    # per extra word
+						'uncommon_words_in_name': 1,   # multiplier
+							'popularity': 2,
+								'performed_in_australia': 0.5}   
+
+
+		criteria = {'words_in_name': lambda x: bonuses['words_in_name']*(len(x.split()) - 1),
+					'uncommon_words_in_name': lambda x: bonuses['uncommon_words_in_name']*(1 - sum([(self.spell_checker.check(x) or self.spell_checker.check(x.title())) 
+															for w in x.split()])/len(x.split())),
+					'popularity': lambda x: bonuses['popularity'] if x in self._artists_popular else 0,
+					'performed_in_australia': lambda x: bonuses['performed_in_australia'] if x in self._aus_gig_artists else 0}
+
+		scores_ = [a._replace(score=sum([a.words_in_name, a.uncommon_words_in_name, a.popularity, a.performed_in_australia]))
+						 for a in [Artist(name=a, **{c: criteria[c](a) for c in criteria}) for a in artist_list]]
+
+		return [_.name for _ in sorted(scores_, key=lambda x: x.score, reverse=True) if _.score > 0][:MAX_ART]
+
+
+
 if __name__ == '__main__':
 
 	e = Event('123ddf')
-	e.description = """0222ds TOMORROW performance by MAGDA OLIVERO plus guns'n' roses (** Arsenal at ANZ stadium, museum  
-						NZ -- 20/01/2015 : gordon 2064 also Bon Jovi so its Somalia & soccer at Lane  cove"""
+	e.description = """12/32/3444 ___ CRONULLA! concert at chatswood ChasE rihanna ADELE and also bob mcg a-LEAGUE tuesday **&(&(Y netball 2011"""
 	
 	eff = EventFeatureFactory()
 	
 	t0 = time.time()
 
-	print('countries:', eff.find(e.description, 'countries'))
+	for etype in eff._NES:
 
-	print('sport_names:', eff.find(e.description, 'sport_names'))
+		fnd_ = eff.find(e.description, etype)
 
-	print('suburbs:', eff.find(e.description, 'suburbs'))
-
-	print('artists:', eff.find(e.description, 'artists') & eff._artists_popular)
-
-	print('venues:', eff.find(e.description, 'venue_types'))
-
-	print(f'time: {time.time() - t0} sec')
-	
-	# print(e._labels)
+		if etype == 'artists':
+			suggested_artists = eff.rank_artists(fnd_)
+			if suggested_artists:
+				print(f'found artists: {", ".join(suggested_artists)}')
 
