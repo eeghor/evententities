@@ -139,13 +139,17 @@ class EventFeatureFactory:
 
 		self._aus_gig_artists = {self._normalize(a) for a in open(os.path.join(self.DATA_DIR, 'aus_gig_artists.txt')).readlines() if a.strip()}
 
+		self._life_coaches = {self._normalize(a) for a in open(os.path.join(self.DATA_DIR, 'life_coaches.txt')).readlines() if a.strip()}
+
 		self._NES = {'suburbs': self._suburbs, 'musicals': self._musicals, 
 					 'artists': self._artists, 'movies': self._movies,
 					 'promoters': self._promoters, 'opera_singers': self._opera_singers,
 					 'countries': self._countries, 'teams': self._teams,
 					 'sport_names': self._sport_names, 'venue_types': self._venue_types,
 					 'major_music_genres': self._major_music_genres, 'tournament_types': self._tournament_types,
-					 'purchase_types': self._purchase_types, 'comedians': self._comedians}
+					 'tournaments': self._tournament_types, 'sponsors': self._sponsors,
+					 'purchase_types': self._purchase_types, 'comedians': self._comedians,
+					 'life_coaches': self._life_coaches}
 
 	def _deabbreviate(self, st):
 		"""
@@ -272,6 +276,21 @@ class EventFeatureFactory:
 
 		return [_.name for _ in sorted(scores_, key=lambda x: x.score, reverse=True) if _.score > 0][:MAX_ART]
 
+	def rank_countries(self, countries):
+		"""
+		decide what countries in countries are worth keeping
+		"""
+
+		if not isinstance(countries, list):
+			_ = list(countries)
+		else:
+			_ = countries
+
+		list_out = [c for c in _ if (len(c) > 3) or (c in ['aus', 'nz', 'png', 'usa', 'us', 'uk'])]
+
+		return list_out if list_out else None
+
+
 
 
 if __name__ == '__main__':
@@ -291,4 +310,7 @@ if __name__ == '__main__':
 			suggested_artists = eff.rank_artists(fnd_)
 			if suggested_artists:
 				print(f'found artists: {", ".join(suggested_artists)}')
+		elif etype == 'countries':
+			print(etype)
+			print(eff.rank_countries(fnd_))
 
