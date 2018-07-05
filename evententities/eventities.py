@@ -147,6 +147,8 @@ class EventFeatureFactory(ArtistNameNormaliser):
 		self._suburbs = json.load(open(os.path.join(self.DATA_DIR, 'data_suburbs.json')))
 		
 		self._promoters = json.load(open(os.path.join(self.DATA_DIR, 'data_promoters.json')))
+		self._music_venues = json.load(open(os.path.join(self.DATA_DIR, 'data_music-venues.json')))
+
 		self._artists = json.load(open(os.path.join(self.DATA_DIR, 'data_artists.json')))
 		self._major_music_genres = json.load(open(os.path.join(self.DATA_DIR, 'data_major-music-genres.json')))
 
@@ -172,7 +174,9 @@ class EventFeatureFactory(ArtistNameNormaliser):
 					 'promoters': self._promoters, 'opera_singers': self._opera_singers,
 					 'countries': self._countries, 'teams': self._teams,
 					 'sport_names': self._sport_names, 'venue_types': self._venue_types,
-					 'major_music_genres': self._major_music_genres, 'tournament_types': self._tournament_types,
+					 'major_music_genres': self._major_music_genres, 
+					 'music_venues': self._music_venues,
+					 'tournament_types': self._tournament_types,
 					 'tournaments': self._tournament_types, 'sponsors': self._sponsors,
 					 'purchase_types': self._purchase_types, 'comedians': self._comedians,
 					 'life_coaches': self._life_coaches}
@@ -345,7 +349,7 @@ class EventFeatureFactory(ArtistNameNormaliser):
 if __name__ == '__main__':
 
 	e = Event(event_id='123ddf',
-				description="""12/32/3444 ___ CRONULLA! the usa concert at chatswood ChasE caesars entertainment presenting tim talman 
+				description="""12/32/3444 ___ CRONULLA! the usa concert at enmore caesars entertainment presenting tim talman 
 					3434347 MEtall!ca p!nk ADELE and also bob mcg DEPECHe @!@mode 
 					a-LEAGUE tuesday **&(&(Y netball tour 2011""")
 	
