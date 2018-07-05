@@ -9,7 +9,10 @@ import re
 import os
 import time
 import enchant
+from artistnormaliser import ArtistNameNormaliser
 from typing import NamedTuple
+from pprint import pprint
+
 
 class Artist(NamedTuple):
 
@@ -88,17 +91,37 @@ class Event:
 	def timestamp(self, value):
 		if isinstance(value, str):
 			self._timestamp = value
+
+	def show(self):
+
+		print(f'id: {self._ev_id}')
+		print(f'description: {self.description}')
+		print('labels:')
+		pprint(self._labels)
+		print(f'entertainment type: {self.entertainment}')
+
+	def get_type(self):
+		"""
+		decide what event type it is based on labels
+		"""
+		# if 'life_coaches' in self._labels:
+		# 	self.entertainment = 'life_coaches'
+
+		if {'artists', 'promoters'} < set(self._labels):
+			self.entertainment = 'concert'
+
+		return self
 	
 
-class EventFeatureFactory:
+class EventFeatureFactory(ArtistNameNormaliser):
 	"""
 	extract entities from event description
 	"""
 	def __init__(self):
 
-		self._ev_id = None
-		self._description = None
-		self._labels = defaultdict()
+		# self._ev_id = None
+		# self._description = None
+		# self._labels = defaultdict()
 
 		self.spell_checker = enchant.Dict("en_US")
 
@@ -127,7 +150,7 @@ class EventFeatureFactory:
 		self._artists = json.load(open(os.path.join(self.DATA_DIR, 'data_artists.json')))
 		self._major_music_genres = json.load(open(os.path.join(self.DATA_DIR, 'data_major-music-genres.json')))
 
-		self._award_winners = [self._normalize(a) for a in json.load(open(os.path.join(self.DATA_DIR, 'award_winners.json')))]
+		self._award_winners = [self.normalise_name(a) for a in json.load(open(os.path.join(self.DATA_DIR, 'award_winners.json')))]
 
 		self._comedians = json.load(open(os.path.join(self.DATA_DIR, 'data_comedians.json')))
 		self._opera_singers = json.load(open(os.path.join(self.DATA_DIR, 'data_opera-singers.json')))
@@ -138,11 +161,11 @@ class EventFeatureFactory:
 		
 		self._purchase_types = json.load(open(os.path.join(self.DATA_DIR, 'data_purchase-types.json')))
 
-		self._artists_popular = {self._normalize(a) for a in open(os.path.join(self.DATA_DIR, 'top_artists.txt')).readlines() if a.strip()}
+		self._artists_popular = {self.normalise_name(a) for a in open(os.path.join(self.DATA_DIR, 'top_artists.txt')).readlines() if a.strip()}
 
-		self._aus_gig_artists = {self._normalize(a) for a in open(os.path.join(self.DATA_DIR, 'aus_gig_artists.txt')).readlines() if a.strip()}
+		self._aus_gig_artists = {self.normalise_name(a) for a in open(os.path.join(self.DATA_DIR, 'aus_gig_artists.txt')).readlines() if a.strip()}
 
-		self._life_coaches = {self._normalize(a) for a in open(os.path.join(self.DATA_DIR, 'life_coaches.txt')).readlines() if a.strip()}
+		self._life_coaches = json.load(open(os.path.join(self.DATA_DIR, 'life_coaches.json')))
 
 		self._NES = {'suburbs': self._suburbs, 'musicals': self._musicals, 
 					 'artists': self._artists, 'movies': self._movies,
@@ -230,7 +253,7 @@ class EventFeatureFactory:
 
 		assert what in self._NES, f'unfortunately, {what} is not supported'
 
-		_s = self._normalize(st)
+		_s = self.normalise_name(st)
 
 		dk = self._NES[what]
 
@@ -279,8 +302,6 @@ class EventFeatureFactory:
 		scores_ = [a._replace(score=sum([a.words_in_name, a.uncommon_words_in_name, a.popularity, a.performed_in_australia]))
 						 for a in [Artist(name=a, **{c: criteria[c](a) for c in criteria}) for a in artist_list]]
 
-		print(scores_)
-
 		return [_.name for _ in sorted(scores_, key=lambda x: x.score, reverse=True) if _.score > 0][:MAX_ART]
 
 	def rank_countries(self, countries):
@@ -297,29 +318,41 @@ class EventFeatureFactory:
 
 		return list_out if list_out else None
 
+	def get_labels(self, s):
+		"""
+		extract all labels from description s
+		"""
 
+		labels_ = dict()
+
+		for what in self._NES:
+
+			fnd_ = self.find(s, what)
+
+			if fnd_:
+
+				if what == 'artists':
+					fnd_ = self.rank_artists(fnd_)
+				elif what == 'countries':
+					fnd_ = self.rank_countries(fnd_)
+				if fnd_:
+					labels_.update({what: fnd_})
+
+		return labels_
+				
 
 
 if __name__ == '__main__':
 
-	e = Event('123ddf')
-	e.description = """12/32/3444 ___ CRONULLA! the usa concert at chatswood ChasE 3434347 MEtallica p!nk rihanna ADELE and also bob mcg DEPECHe @!@mode a-LEAGUE tuesday **&(&(Y netball tour 2011"""
+	e = Event(event_id='123ddf',
+				description="""12/32/3444 ___ CRONULLA! the usa concert at chatswood ChasE caesars entertainment presenting tim talman 
+					3434347 MEtall!ca p!nk ADELE and also bob mcg DEPECHe @!@mode 
+					a-LEAGUE tuesday **&(&(Y netball tour 2011""")
 	
 	eff = EventFeatureFactory()
 	
-	t0 = time.time()
+	e._labels = eff.get_labels(e.description)
 
-	for etype in eff._NES:
+	e.get_type()
 
-		fnd_ = eff.find(e.description, etype)
-
-		if fnd_:
-			if etype == 'artists':
-				suggested_artists = eff.rank_artists(fnd_)
-				if suggested_artists:
-					print(f'found {etype}: {", ".join(suggested_artists)}')
-			elif etype == 'countries':
-				print(f'{etype}: {eff.rank_countries(fnd_)}')
-			else:
-				print(f'{etype}: {fnd_}')
-
+	e.show()
