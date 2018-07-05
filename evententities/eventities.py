@@ -17,6 +17,7 @@ class Artist(NamedTuple):
 	words_in_name: float
 	uncommon_words_in_name: float
 	popularity: float
+	award_winner: float
 	performed_in_australia: float
 	score: float=0
 
@@ -125,6 +126,8 @@ class EventFeatureFactory:
 		self._promoters = json.load(open(os.path.join(self.DATA_DIR, 'data_promoters.json')))
 		self._artists = json.load(open(os.path.join(self.DATA_DIR, 'data_artists.json')))
 		self._major_music_genres = json.load(open(os.path.join(self.DATA_DIR, 'data_major-music-genres.json')))
+
+		self._award_winners = [self._normalize(a) for a in json.load(open(os.path.join(self.DATA_DIR, 'award_winners.json')))]
 
 		self._comedians = json.load(open(os.path.join(self.DATA_DIR, 'data_comedians.json')))
 		self._opera_singers = json.load(open(os.path.join(self.DATA_DIR, 'data_opera-singers.json')))
@@ -262,6 +265,7 @@ class EventFeatureFactory:
 		bonuses = {'words_in_name': 0.5,    # per extra word
 						'uncommon_words_in_name': 1,   # multiplier
 							'popularity': 2,
+								'award_winner': 1,
 								'performed_in_australia': 0.5}   
 
 
@@ -269,10 +273,13 @@ class EventFeatureFactory:
 					'uncommon_words_in_name': lambda x: bonuses['uncommon_words_in_name']*(1 - sum([(self.spell_checker.check(x) or self.spell_checker.check(x.title())) 
 															for w in x.split()])/len(x.split())),
 					'popularity': lambda x: bonuses['popularity'] if x in self._artists_popular else 0,
+					'award_winner': lambda x: bonuses['award_winner'] if x in self._award_winners else 0,
 					'performed_in_australia': lambda x: bonuses['performed_in_australia'] if x in self._aus_gig_artists else 0}
 
 		scores_ = [a._replace(score=sum([a.words_in_name, a.uncommon_words_in_name, a.popularity, a.performed_in_australia]))
 						 for a in [Artist(name=a, **{c: criteria[c](a) for c in criteria}) for a in artist_list]]
+
+		print(scores_)
 
 		return [_.name for _ in sorted(scores_, key=lambda x: x.score, reverse=True) if _.score > 0][:MAX_ART]
 
@@ -296,7 +303,7 @@ class EventFeatureFactory:
 if __name__ == '__main__':
 
 	e = Event('123ddf')
-	e.description = """12/32/3444 ___ CRONULLA! concert at chatswood ChasE rihanna ADELE and also bob mcg a-LEAGUE tuesday **&(&(Y netball 2011"""
+	e.description = """12/32/3444 ___ CRONULLA! the usa concert at chatswood ChasE 3434347 MEtallica p!nk rihanna ADELE and also bob mcg DEPECHe @!@mode a-LEAGUE tuesday **&(&(Y netball tour 2011"""
 	
 	eff = EventFeatureFactory()
 	
@@ -306,11 +313,13 @@ if __name__ == '__main__':
 
 		fnd_ = eff.find(e.description, etype)
 
-		if etype == 'artists':
-			suggested_artists = eff.rank_artists(fnd_)
-			if suggested_artists:
-				print(f'found artists: {", ".join(suggested_artists)}')
-		elif etype == 'countries':
-			print(etype)
-			print(eff.rank_countries(fnd_))
+		if fnd_:
+			if etype == 'artists':
+				suggested_artists = eff.rank_artists(fnd_)
+				if suggested_artists:
+					print(f'found {etype}: {", ".join(suggested_artists)}')
+			elif etype == 'countries':
+				print(f'{etype}: {eff.rank_countries(fnd_)}')
+			else:
+				print(f'{etype}: {fnd_}')
 
