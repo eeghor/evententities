@@ -117,7 +117,12 @@ class Event:
 		conditions = {'concert': any([{'artists', 'promoters'} < set(self._labels),
 										('artists' in self._labels) and ({'guest', 'featuring', 'feat', 'with', 
 											'headline', 'presents', 'vinyl', 'cd', 'tour'} & words_in_descr_),
-												'doors open' in descr_norm_])}
+												'doors open' in descr_norm_]),
+
+					  'special interest': {'boxers', 'psychics', 'life_coaches', 'motivational_speakers'} & set(self._labels),
+					  'sport': any([len(self._labels.get('teams', [])) == 2,
+					  					{'sport_venues', 'sport_names'} < set(self._labels)])}
+
 		for tp in conditions:
 
 			if conditions[tp]:
@@ -133,18 +138,20 @@ class EventFeatureFactory(ArtistNameNormaliser):
 	"""
 	def __init__(self):
 
-		# self._ev_id = None
-		# self._description = None
-		# self._labels = defaultdict()
-
 		self.spell_checker = enchant.Dict("en_US")
 
 		self.DATA_DIR = os.path.join(os.path.curdir, 'data')
 
+		# geo
+
+		self.GEO_DIR = 'geo'
+
+		self._state_abb, self._countries, self._suburbs = [json.load(open(os.path.join(self.DATA_DIR, self.GEO_DIR, f + '.json'))) 
+			for f in ['state-abbreviations', 'countries', 'suburbs']]
+
 		# abbreviations
-		self._abb, self._state_abb = [json.load(open(os.path.join(self.DATA_DIR, f))) 
-			for f in ['data_abbreviations.json', 
-						'data_state-abbreviations.json']]
+		self._abb = [json.load(open(os.path.join(self.DATA_DIR, f))) 
+			for f in ['data_abbreviations.json']]
 		# sports
 
 		self.SPORTS_DIR = 'sports'
@@ -176,9 +183,6 @@ class EventFeatureFactory(ArtistNameNormaliser):
 		self._musicals = json.load(open(os.path.join(self.DATA_DIR, 'data_musicals.json')))
 		self._venue_types = json.load(open(os.path.join(self.DATA_DIR, 'data_venue-types.json')))
 
-		self._countries =  json.load(open(os.path.join(self.DATA_DIR, 'data_countries.json')))
-		self._suburbs = json.load(open(os.path.join(self.DATA_DIR, 'data_suburbs.json')))
-
 		# opera
 
 		self.OPERA_DIR = 'opera'
@@ -191,12 +195,18 @@ class EventFeatureFactory(ArtistNameNormaliser):
 
 		self._comedians = json.load(open(os.path.join(self.DATA_DIR, self.COMEDY_DIR, 'comedians.json')))
 
+		# circus
+
+		self.CIRCUS_DIR = 'circus'
+
+		self._circuses = json.load(open(os.path.join(self.DATA_DIR, self.CIRCUS_DIR, 'circus.json')))
+
 		# special interests
 
 		self.SPECIAL_DIR = 'special'
 
-		self._life_coaches, self._boxers = [json.load(open(os.path.join(self.DATA_DIR, self.SPECIAL_DIR, f + '.json'))) 
-												for f in ['life_coaches', 'boxers']]
+		self._life_coaches, self._boxers, self._psychics, self._motivational_speakers = [json.load(open(os.path.join(self.DATA_DIR, self.SPECIAL_DIR, f + '.json'))) 
+												for f in ['life_coaches', 'boxers', 'psychics', 'motivational_speakers']]
 
 		self._companies = json.load(open(os.path.join(self.DATA_DIR, 'data_companies.json')))
 
@@ -228,7 +238,10 @@ class EventFeatureFactory(ArtistNameNormaliser):
 					 'purchase_types': self._purchase_types, 
 					 'comedians': self._comedians,
 					 'life_coaches': self._life_coaches,
-					 'boxers': self._boxers}
+					 'boxers': self._boxers,
+					 'psychics': self._psychics,
+					 'circuses': self._circuses,
+					 'motivational_speakers': self._motivational_speakers}
 
 	def _deabbreviate(self, st):
 		"""
@@ -398,7 +411,7 @@ class EventFeatureFactory(ArtistNameNormaliser):
 if __name__ == '__main__':
 
 	e = Event(event_id='123ddf',
-				description='anz stadium chvrches /vivid sydney doors open 17:30 wednesday -- special guest ARIE MALINIAK &. steven rudic')
+				description='qudos bank arena australia manchester city v barcelona 17:30 wednesday')
 	
 	eff = EventFeatureFactory()
 	
