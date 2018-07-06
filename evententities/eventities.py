@@ -22,6 +22,7 @@ class Artist(NamedTuple):
 	popularity: float
 	award_winner: float
 	performed_in_australia: float
+	possibly_dead: float
 	score: float=0
 
 
@@ -174,11 +175,13 @@ class EventFeatureFactory(ArtistNameNormaliser):
 		self._artists = json.load(open(os.path.join(self.DATA_DIR, 'data_artists.json')))
 		self._major_music_genres = json.load(open(os.path.join(self.DATA_DIR, 'data_major-music-genres.json')))
 
-		self._award_winners = [self.normalise_name(a) for a in json.load(open(os.path.join(self.DATA_DIR, 'award_winners.json')))]
+		self._dead_bands = json.load(open(os.path.join(self.DATA_DIR, 'dead_bands.json')))
 
-		self._artists_popular = {self.normalise_name(a) for a in open(os.path.join(self.DATA_DIR, 'top_artists.txt')).readlines() if a.strip()}
+		self._award_winners = [self.normalize(a) for a in json.load(open(os.path.join(self.DATA_DIR, 'award_winners.json')))]
 
-		self._aus_gig_artists = {self.normalise_name(a) for a in open(os.path.join(self.DATA_DIR, 'aus_gig_artists.txt')).readlines() if a.strip()}
+		self._artists_popular = {self.normalize(a) for a in open(os.path.join(self.DATA_DIR, 'top_artists.txt')).readlines() if a.strip()}
+
+		self._aus_gig_artists = {self.normalize(a) for a in open(os.path.join(self.DATA_DIR, 'aus_gig_artists.txt')).readlines() if a.strip()}
 
 		self._musicals = json.load(open(os.path.join(self.DATA_DIR, 'data_musicals.json')))
 		self._venue_types = json.load(open(os.path.join(self.DATA_DIR, 'data_venue-types.json')))
@@ -319,7 +322,7 @@ class EventFeatureFactory(ArtistNameNormaliser):
 
 		assert what in self._NES, f'unfortunately, {what} is not supported'
 
-		_s = self.normalise_name(st)
+		_s = self.normalize(st)
 
 		dk = self._NES[what]
 
@@ -355,7 +358,8 @@ class EventFeatureFactory(ArtistNameNormaliser):
 						'uncommon_words_in_name': 1,   # multiplier
 							'popularity': 2,
 								'award_winner': 1,
-									'performed_in_australia': 0.5}   
+									'performed_in_australia': 0.5,
+										'possibly_dead': -1}   
 
 
 		criteria = {'words_in_name': lambda x: bonuses['words_in_name']*(len(x.split()) - 1),
@@ -363,9 +367,11 @@ class EventFeatureFactory(ArtistNameNormaliser):
 															for w in x.split()])/len(x.split())),
 					'popularity': lambda x: bonuses['popularity'] if x in self._artists_popular else 0,
 					'award_winner': lambda x: bonuses['award_winner'] if x in self._award_winners else 0,
-					'performed_in_australia': lambda x: bonuses['performed_in_australia'] if x in self._aus_gig_artists else 0}
+					'performed_in_australia': lambda x: bonuses['performed_in_australia'] if x in self._aus_gig_artists else 0,
+					'possibly_dead': lambda x: bonuses['possibly_dead'] if x in self._dead_bands[x[0]] else 0}
 
-		scores_ = [a._replace(score=sum([a.words_in_name, a.uncommon_words_in_name, a.popularity, a.performed_in_australia]))
+		scores_ = [a._replace(score=sum([a.words_in_name, a.uncommon_words_in_name, a.popularity, a.performed_in_australia,
+							a.possibly_dead]))
 						 for a in [Artist(name=a, **{c: criteria[c](a) for c in criteria}) for a in artist_list]]
 
 		return [_.name for _ in sorted(scores_, key=lambda x: x.score, reverse=True) if _.score > 0][:MAX_ART]
@@ -411,7 +417,7 @@ class EventFeatureFactory(ArtistNameNormaliser):
 if __name__ == '__main__':
 
 	e = Event(event_id='123ddf',
-				description='qudos bank arena australia manchester city v barcelona 17:30 wednesday')
+				description='qudos bank arena australia manchester city v barcelona 17:30 wednesday d12 the doors and cold cut dj')
 	
 	eff = EventFeatureFactory()
 	
