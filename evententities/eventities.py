@@ -128,24 +128,24 @@ class EventFeatureFactory(ArtistNameNormaliser):
 		self.DATA_DIR = os.path.join(os.path.curdir, 'data')
 
 		# abbreviations
-		self._abb, self._state_abb, self._sport_abb = [json.load(open(os.path.join(self.DATA_DIR, f))) 
+		self._abb, self._state_abb = [json.load(open(os.path.join(self.DATA_DIR, f))) 
 			for f in ['data_abbreviations.json', 
-						'data_state-abbreviations.json', 
-							'data_sport-abbreviations.json']]
+						'data_state-abbreviations.json']]
 		# sports
-		self._teams, self._sport_names, self._tournaments, self._tournament_types, self._sponsors = [json.load(open(os.path.join(self.DATA_DIR, f))) 
-			for f in ['data_teams.json', 
-						'data_sport-names.json', 
-							'data_tournaments.json',
-								'data_tournament-types.json',
-									'data_sponsors.json']]
-		
-		self._musicals = json.load(open(os.path.join(self.DATA_DIR, 'data_musicals.json')))
-		self._venue_types = json.load(open(os.path.join(self.DATA_DIR, 'data_venue-types.json')))
 
-		self._countries =  json.load(open(os.path.join(self.DATA_DIR, 'data_countries.json')))
-		self._suburbs = json.load(open(os.path.join(self.DATA_DIR, 'data_suburbs.json')))
-		
+		self.SPORTS_DIR = 'sports'
+
+		self._teams, self._sport_names, self._tournaments, \
+			self._tournament_types, self._sponsors, self._sport_venues, self._sport_abb = \
+				[json.load(open(os.path.join(self.DATA_DIR, self.SPORTS_DIR, f))) 
+			for f in ['teams.json', 
+						'sport-names.json', 
+							'tournaments.json',
+								'tournament-types.json',
+									'sponsors.json',
+										'sport-venues.json',
+											'sport-abbrs.json']]
+		# music
 		self._promoters = json.load(open(os.path.join(self.DATA_DIR, 'data_promoters.json')))
 		self._music_venues = json.load(open(os.path.join(self.DATA_DIR, 'data_music-venues.json')))
 
@@ -154,31 +154,48 @@ class EventFeatureFactory(ArtistNameNormaliser):
 
 		self._award_winners = [self.normalise_name(a) for a in json.load(open(os.path.join(self.DATA_DIR, 'award_winners.json')))]
 
+		self._artists_popular = {self.normalise_name(a) for a in open(os.path.join(self.DATA_DIR, 'top_artists.txt')).readlines() if a.strip()}
+
+		self._aus_gig_artists = {self.normalise_name(a) for a in open(os.path.join(self.DATA_DIR, 'aus_gig_artists.txt')).readlines() if a.strip()}
+
+		self._musicals = json.load(open(os.path.join(self.DATA_DIR, 'data_musicals.json')))
+		self._venue_types = json.load(open(os.path.join(self.DATA_DIR, 'data_venue-types.json')))
+
+		self._countries =  json.load(open(os.path.join(self.DATA_DIR, 'data_countries.json')))
+		self._suburbs = json.load(open(os.path.join(self.DATA_DIR, 'data_suburbs.json')))
+
 		self._comedians = json.load(open(os.path.join(self.DATA_DIR, 'data_comedians.json')))
 		self._opera_singers = json.load(open(os.path.join(self.DATA_DIR, 'data_opera-singers.json')))
 
 		self._companies = json.load(open(os.path.join(self.DATA_DIR, 'data_companies.json')))
 
 		self._movies = json.load(open(os.path.join(self.DATA_DIR, 'data_movies.json')))
+
+		self._festivals = json.load(open(os.path.join(self.DATA_DIR, 'data_festivals.json')))
 		
 		self._purchase_types = json.load(open(os.path.join(self.DATA_DIR, 'data_purchase-types.json')))
 
-		self._artists_popular = {self.normalise_name(a) for a in open(os.path.join(self.DATA_DIR, 'top_artists.txt')).readlines() if a.strip()}
-
-		self._aus_gig_artists = {self.normalise_name(a) for a in open(os.path.join(self.DATA_DIR, 'aus_gig_artists.txt')).readlines() if a.strip()}
-
 		self._life_coaches = json.load(open(os.path.join(self.DATA_DIR, 'life_coaches.json')))
 
-		self._NES = {'suburbs': self._suburbs, 'musicals': self._musicals, 
-					 'artists': self._artists, 'movies': self._movies,
-					 'promoters': self._promoters, 'opera_singers': self._opera_singers,
-					 'countries': self._countries, 'teams': self._teams,
-					 'sport_names': self._sport_names, 'venue_types': self._venue_types,
+		self._NES = {'suburbs': self._suburbs, 
+					 'musicals': self._musicals, 
+					 'artists': self._artists, 
+					 'movies': self._movies,
+					 'promoters': self._promoters, 
+					 'opera_singers': self._opera_singers,
+					 'countries': self._countries, 
+					 'teams': self._teams,
+					 'sport_names': self._sport_names, 
+					 'venue_types': self._venue_types,
+					 'sport_venues': self._sport_venues,
 					 'major_music_genres': self._major_music_genres, 
 					 'music_venues': self._music_venues,
+					 'festivals': self._festivals,
 					 'tournament_types': self._tournament_types,
-					 'tournaments': self._tournament_types, 'sponsors': self._sponsors,
-					 'purchase_types': self._purchase_types, 'comedians': self._comedians,
+					 'tournaments': self._tournament_types, 
+					 'sponsors': self._sponsors,
+					 'purchase_types': self._purchase_types, 
+					 'comedians': self._comedians,
 					 'life_coaches': self._life_coaches}
 
 	def _deabbreviate(self, st):
@@ -293,7 +310,7 @@ class EventFeatureFactory(ArtistNameNormaliser):
 						'uncommon_words_in_name': 1,   # multiplier
 							'popularity': 2,
 								'award_winner': 1,
-								'performed_in_australia': 0.5}   
+									'performed_in_australia': 0.5}   
 
 
 		criteria = {'words_in_name': lambda x: bonuses['words_in_name']*(len(x.split()) - 1),
@@ -349,9 +366,7 @@ class EventFeatureFactory(ArtistNameNormaliser):
 if __name__ == '__main__':
 
 	e = Event(event_id='123ddf',
-				description="""12/32/3444 ___ CRONULLA! the usa concert at enmore caesars entertainment presenting tim talman 
-					3434347 MEtall!ca p!nk ADELE and also bob mcg DEPECHe @!@mode 
-					a-LEAGUE tuesday **&(&(Y netball tour 2011""")
+				description='anz stadium robbie williams guest CHET FAKER tickets from $100 -- Newtown NSW vivid sydney')
 	
 	eff = EventFeatureFactory()
 	

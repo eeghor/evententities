@@ -1,0 +1,2566 @@
+{
+  "w": {
+    "world league": [
+      "volleyball"
+    ],
+    "world championship": [
+      "skating",
+      "kickboxing",
+      "diving",
+      "fencing",
+      "lacrosse",
+      "bodybuilding",
+      "volleyball",
+      "water polo",
+      "taekwondo",
+      "karate"
+    ],
+    "world grand prix": [
+      "volleyball"
+    ],
+    "world tour": [
+      "volleyball"
+    ],
+    "world cup": [
+      "motorcycle racing",
+      "gymnastics",
+      "water polo",
+      "shooting",
+      "cricket",
+      "baseball",
+      "swimming"
+    ],
+    "world cup trial": [
+      "gymnastics"
+    ],
+    "world cup selection trial": [
+      "gymnastics"
+    ],
+    "world championships": [
+      "cycling",
+      "archery",
+      "canoeing",
+      "sailing"
+    ],
+    "whittlesea challenge": [
+      "cycling"
+    ],
+    "world cup dhi": [
+      "cycling"
+    ],
+    "winton supersprint": [
+      "supercars"
+    ],
+    "world series": [
+      "baseball",
+      "darts",
+      "softball"
+    ],
+    "world cup of darts": [
+      "darts"
+    ],
+    "world matchplay": [
+      "darts"
+    ],
+    "world masters games": [
+      "weightlifting"
+    ],
+    "womens national table tennis challenge": [
+      "table tennis"
+    ],
+    "winter olympics": [
+      "ice skating"
+    ],
+    "waratah bowl": [
+      "gridiron"
+    ],
+    "wod 4 heroes": [
+      "crossfit"
+    ],
+    "wavell masters": [
+      "squash"
+    ],
+    "world indoor championships in athletics": [
+      "pentathlon"
+    ],
+    "world challenge": [
+      "bullriding"
+    ],
+    "world challenge of professional bull riders": [
+      "bullriding"
+    ],
+    "wangaratta dance festival": [
+      "dancesport"
+    ],
+    "world martial arts championships": [
+      "karate"
+    ],
+    "world artistic roller skating championships": [
+      "skating"
+    ],
+    "world speed skating championships": [
+      "skating"
+    ],
+    "womens lake macquarie amateur": [
+      "golf"
+    ],
+    "womens riversdale cup": [
+      "golf"
+    ],
+    "wa womens 72-hole stroke play": [
+      "golf"
+    ],
+    "womens nsw amateur": [
+      "golf"
+    ],
+    "womens glenelg vardon": [
+      "golf"
+    ],
+    "wa womens 72-hole strokeplay": [
+      "golf"
+    ],
+    "womens lm gordon bowl": [
+      "golf"
+    ],
+    "wa womens amateur": [
+      "golf"
+    ],
+    "world amateur teams - espirito santo trophy": [
+      "golf"
+    ],
+    "world amateur teams - eisenhower trophy": [
+      "golf"
+    ],
+    "womens australian open": [
+      "golf"
+    ],
+    "womens nsw senior amateur": [
+      "golf"
+    ],
+    "womens victorian veterans amateur": [
+      "golf"
+    ],
+    "womens qld stroke play": [
+      "golf"
+    ],
+    "womens nt amateur": [
+      "golf"
+    ],
+    "womens nt senior amateur": [
+      "golf"
+    ],
+    "womens nsw stroke play & amateur": [
+      "golf"
+    ],
+    "womens qld secondary snr event (south pacific)": [
+      "golf"
+    ],
+    "womens wa senior amateur": [
+      "golf"
+    ],
+    "womens wa amateur": [
+      "golf"
+    ],
+    "womens sa 72-hole stroke play": [
+      "golf"
+    ],
+    "womens qld senior amateur": [
+      "golf"
+    ],
+    "wa womens seniors cup": [
+      "golf"
+    ],
+    "womens tas 72-hole stroke play": [
+      "golf"
+    ],
+    "womens senior tas amateur": [
+      "golf"
+    ],
+    "womens victorian stroke play": [
+      "golf"
+    ],
+    "womens senior nsw amateur": [
+      "golf"
+    ],
+    "womens senior nt amateur": [
+      "golf"
+    ],
+    "womens wa 72-hole stroke play": [
+      "golf"
+    ],
+    "womens nsw 72-hole stroke play": [
+      "golf"
+    ],
+    "womens senior wa amateur": [
+      "golf"
+    ],
+    "womens vic amateur": [
+      "golf"
+    ],
+    "womens tas senior amateur": [
+      "golf"
+    ],
+    "womens senior wa senior cup": [
+      "golf"
+    ],
+    "womens vic 72-hole stroke play": [
+      "golf"
+    ],
+    "womens vic veterans amateur": [
+      "golf"
+    ],
+    "womens sa 72 hole stroke play (rene erichsen)": [
+      "golf"
+    ],
+    "womens wa seniors cup": [
+      "golf"
+    ],
+    "womens victorian amateur": [
+      "golf"
+    ],
+    "womens nsw 72 hole stroke play": [
+      "golf"
+    ],
+    "wa srixon championship": [
+      "golf"
+    ],
+    "world amateur teams - espirito santo": [
+      "golf"
+    ],
+    "womens wa senior cup": [
+      "golf"
+    ],
+    "womens tas 72-hole stroke play (elvie whiteside)": [
+      "golf"
+    ],
+    "womens nsw open": [
+      "golf"
+    ],
+    "womens wa 72- hole stroke play": [
+      "golf"
+    ],
+    "womens tasmanian senior amateur": [
+      "golf"
+    ],
+    "womens vic senior amateur": [
+      "golf"
+    ],
+    "world league tournament": [
+      "water polo"
+    ],
+    "wildwater": [
+      "canoeing"
+    ],
+    "world poomsae champsionships": [
+      "taekwondo"
+    ],
+    "wyong": [
+      "triathlon"
+    ],
+    "world cup of softball": [
+      "softball"
+    ],
+    "world club series": [
+      "rugby"
+    ]
+  },
+  "l": {
+    "league": [
+      "hockey",
+      "volleyball",
+      "basketball",
+      "water polo",
+      "netball",
+      "cricket"
+    ],
+    "li-ning sydney": [
+      "badminton"
+    ],
+    "lakes classic": [
+      "squash"
+    ],
+    "livelighter open": [
+      "dancesport"
+    ],
+    "lion cup": [
+      "karate"
+    ],
+    "lg/bing lee women’s nsw open": [
+      "golf"
+    ],
+    "lg/bing lee womens nsw open": [
+      "golf"
+    ],
+    "lpga championship": [
+      "golf"
+    ],
+    "laser standard": [
+      "sailing"
+    ],
+    "laser radial": [
+      "sailing"
+    ]
+  },
+  "r": {
+    "regional": [
+      "volleyball"
+    ],
+    "regatta": [
+      "sailing",
+      "canoeing",
+      "rowing"
+    ],
+    "race": [
+      "motorcycle racing",
+      "cycling",
+      "triathlon",
+      "pentathlon"
+    ],
+    "road world championships": [
+      "cycling"
+    ],
+    "real insurance xcm series": [
+      "cycling"
+    ],
+    "regionals": [
+      "bodybuilding"
+    ],
+    "rodeo": [
+      "bullriding"
+    ],
+    "rounds": [
+      "bullriding"
+    ],
+    "riverina dance": [
+      "dancesport"
+    ],
+    "robyn chaplin tournament": [
+      "fencing"
+    ],
+    "rene erichsen salver": [
+      "golf"
+    ],
+    "ricoh womens british open": [
+      "golf"
+    ],
+    "royal melbourne senior classic": [
+      "golf"
+    ],
+    "rifle": [
+      "shooting"
+    ],
+    "rottnest island sufferfest": [
+      "triathlon"
+    ],
+    "round": [
+      "motorcycle racing"
+    ],
+    "road racing": [
+      "motorcycle racing"
+    ]
+  },
+  "m": {
+    "major": [
+      "volleyball"
+    ],
+    "masters championships": [
+      "rowing"
+    ],
+    "mountain bike world championships": [
+      "cycling"
+    ],
+    "masters road national championships": [
+      "cycling"
+    ],
+    "mersey valley tour": [
+      "cycling"
+    ],
+    "marysville lake mountain challenge": [
+      "cycling"
+    ],
+    "marathon mtb championships": [
+      "cycling"
+    ],
+    "maribyrnong open competitions": [
+      "wrestling"
+    ],
+    "masters": [
+      "golf",
+      "darts",
+      "squash"
+    ],
+    "masters games": [
+      "boxing",
+      "table tennis"
+    ],
+    "masters league": [
+      "crossfit"
+    ],
+    "masters of mayhem": [
+      "crossfit"
+    ],
+    "mackay open": [
+      "squash"
+    ],
+    "moura junion squash open": [
+      "squash"
+    ],
+    "maash open": [
+      "squash"
+    ],
+    "macquarie uni open": [
+      "squash"
+    ],
+    "military pentathalon": [
+      "pentathlon"
+    ],
+    "mlb australian academy program": [
+      "baseball"
+    ],
+    "mlb australian showcase": [
+      "baseball"
+    ],
+    "melbourne titles": [
+      "bodybuilding"
+    ],
+    "melbourne invitational": [
+      "bullriding"
+    ],
+    "match": [
+      "kickboxing",
+      "lacrosse",
+      "fencing",
+      "handball",
+      "karate"
+    ],
+    "martial arts": [
+      "karate",
+      "taekwondo"
+    ],
+    "mens lake macquarie amateur": [
+      "golf"
+    ],
+    "mens tasmanian open": [
+      "golf"
+    ],
+    "mens riversdale cup": [
+      "golf"
+    ],
+    "mandurah mens easter amateur": [
+      "golf"
+    ],
+    "mens saga invitational": [
+      "golf"
+    ],
+    "mfs australian mens senior amateur": [
+      "golf"
+    ],
+    "mens keperra bowl": [
+      "golf"
+    ],
+    "mens federal open amateur": [
+      "golf"
+    ],
+    "mfs australian womens senior amateur": [
+      "golf"
+    ],
+    "mfs mens australian open": [
+      "golf"
+    ],
+    "mfs australian mens mid amateur": [
+      "golf"
+    ],
+    "mfs womens australian open": [
+      "golf"
+    ],
+    "mens mandurah easter amateur": [
+      "golf"
+    ],
+    "mfs australian womens mid amateur": [
+      "golf"
+    ],
+    "mfs australian open": [
+      "golf"
+    ],
+    "mens sa invitiational": [
+      "golf"
+    ],
+    "mens & womens dunes medal": [
+      "golf"
+    ],
+    "mens australian open": [
+      "golf"
+    ],
+    "mission hills asia-pacific open amateur": [
+      "golf"
+    ],
+    "mens & womens sa amateur": [
+      "golf"
+    ],
+    "mens tasmanian senior open": [
+      "golf"
+    ],
+    "mens tas senior amateur": [
+      "golf"
+    ],
+    "mens nsw senior amateur": [
+      "golf"
+    ],
+    "mens wa senior amateur": [
+      "golf"
+    ],
+    "mens melville gladies senior amateur": [
+      "golf"
+    ],
+    "mens wa medal & amateur": [
+      "golf"
+    ],
+    "mens golf sa amateur classic": [
+      "golf"
+    ],
+    "mens nt senior amateur": [
+      "golf"
+    ],
+    "mens qld stroke play": [
+      "golf"
+    ],
+    "mens nt amateur": [
+      "golf"
+    ],
+    "mens cobram-barooga senior amateur": [
+      "golf"
+    ],
+    "mens & womens qld amateur": [
+      "golf"
+    ],
+    "mens qld senior amateur": [
+      "golf"
+    ],
+    "mens & womens grange senior open": [
+      "golf"
+    ],
+    "mens wa open": [
+      "golf"
+    ],
+    "mens victorian senior amateur": [
+      "golf"
+    ],
+    "mens sa senior amateur": [
+      "golf"
+    ],
+    "mens & womens act senior amateur": [
+      "golf"
+    ],
+    "mens nsw open": [
+      "golf"
+    ],
+    "mens vic medal & amateur": [
+      "golf"
+    ],
+    "mens subaru vic open": [
+      "golf"
+    ],
+    "mens imagetec nsw medal & amateur": [
+      "golf"
+    ],
+    "mens senior tas open": [
+      "golf"
+    ],
+    "mens seniors secondary event": [
+      "golf"
+    ],
+    "mens senior tas amateur": [
+      "golf"
+    ],
+    "mens senior nsw amateur": [
+      "golf"
+    ],
+    "mens senior wa amateur": [
+      "golf"
+    ],
+    "mens & womens tasmanian amateur": [
+      "golf"
+    ],
+    "mens senior melville glades amateur": [
+      "golf"
+    ],
+    "mens & womens qld stroke play": [
+      "golf"
+    ],
+    "mens senior nt amateur": [
+      "golf"
+    ],
+    "mens senior qld amateur": [
+      "golf"
+    ],
+    "mens senior qld open": [
+      "golf"
+    ],
+    "mens & womens senior grange open amateur": [
+      "golf"
+    ],
+    "mens senior vic amateur": [
+      "golf"
+    ],
+    "mens & womens senior act amateur": [
+      "golf"
+    ],
+    "mens victorian open": [
+      "golf"
+    ],
+    "mens nsw medal & amateur": [
+      "golf"
+    ],
+    "mens tasmanian senior amateur": [
+      "golf"
+    ],
+    "mens nsw senior secondary event": [
+      "golf"
+    ],
+    "mens melville glades senior": [
+      "golf"
+    ],
+    "mens & womens tas amateur": [
+      "golf"
+    ],
+    "mandurah easter amateur open": [
+      "golf"
+    ],
+    "mens grange senior open": [
+      "golf"
+    ],
+    "master of the amateurs - qualifying": [
+      "golf"
+    ],
+    "mens victorian medal & amateur": [
+      "golf"
+    ],
+    "mens & womens vic open": [
+      "golf"
+    ],
+    "mens nsw senior classic": [
+      "golf"
+    ],
+    "mens & womens wa amateur": [
+      "golf"
+    ],
+    "mens lake karrinyup senior classic": [
+      "golf"
+    ],
+    "mens gold coast senior amateur": [
+      "golf"
+    ],
+    "mens grange senior amateur": [
+      "golf"
+    ],
+    "mandurah open amateur": [
+      "golf"
+    ],
+    "mens & womens qld stroke play & amateur": [
+      "golf"
+    ],
+    "mens & womens victorian opens": [
+      "golf"
+    ],
+    "mens & womens riversdale cup": [
+      "golf"
+    ],
+    "mens golf sa classic & womens rene erichsen": [
+      "golf"
+    ],
+    "mens mandurah open amateur": [
+      "golf"
+    ],
+    "mens & womens nsw amateurs": [
+      "golf"
+    ],
+    "mens tas open & womens stroke play (elvie whiteside)": [
+      "golf"
+    ],
+    "mens & womens victorian open": [
+      "golf"
+    ],
+    "mens vic senior amateur": [
+      "golf"
+    ],
+    "mens & womens nsw amateur": [
+      "golf"
+    ],
+    "mens & womens oates vic open": [
+      "golf"
+    ],
+    "mens & womens lake macquarie amateur": [
+      "golf"
+    ],
+    "mens wa secondary senior amateur": [
+      "golf"
+    ],
+    "mens & womens vic senior amateur": [
+      "golf"
+    ],
+    "mens & womens avondale amateur": [
+      "golf"
+    ],
+    "matchplay series": [
+      "archery"
+    ],
+    "marathon": [
+      "canoeing"
+    ],
+    "murray man": [
+      "triathlon"
+    ],
+    "maitland": [
+      "triathlon"
+    ],
+    "motocross": [
+      "motorcycle racing"
+    ],
+    "minikhana": [
+      "motorcycle racing"
+    ],
+    "motogp": [
+      "motorcycle racing"
+    ]
+  },
+  "s": {
+    "state slam": [
+      "volleyball"
+    ],
+    "sydney international rowing regatta": [
+      "rowing"
+    ],
+    "santos tour down under": [
+      "cycling"
+    ],
+    "spring cycle": [
+      "cycling"
+    ],
+    "sa camp": [
+      "wrestling"
+    ],
+    "super2 series": [
+      "supercars"
+    ],
+    "superutes series": [
+      "supercars"
+    ],
+    "sydney supersprint": [
+      "supercars"
+    ],
+    "sandown 500": [
+      "supercars"
+    ],
+    "state teams championships": [
+      "swimming"
+    ],
+    "sudirman cup": [
+      "badminton"
+    ],
+    "staunch": [
+      "crossfit"
+    ],
+    "state of origin": [
+      "boxing",
+      "rugby"
+    ],
+    "sheffield shield": [
+      "cricket"
+    ],
+    "synchronised": [
+      "diving"
+    ],
+    "springboard": [
+      "diving"
+    ],
+    "summer olympics": [
+      "pentathlon",
+      "canoeing"
+    ],
+    "selection trial": [
+      "triathlon",
+      "pentathlon"
+    ],
+    "summer paralympics": [
+      "pentathlon"
+    ],
+    "science olympiad": [
+      "pentathlon"
+    ],
+    "showcase": [
+      "bodybuilding"
+    ],
+    "star dancesport spectacular": [
+      "dancesport"
+    ],
+    "spring dance festival": [
+      "dancesport"
+    ],
+    "salon style open": [
+      "dancesport"
+    ],
+    "sydney royal easter show": [
+      "equestrian"
+    ],
+    "sportaccord combat games": [
+      "kickboxing"
+    ],
+    "skate australia agm": [
+      "skating"
+    ],
+    "sunshine coast open": [
+      "golf"
+    ],
+    "south pacific ladies open": [
+      "golf"
+    ],
+    "sa womens 72 hole stroke play": [
+      "golf"
+    ],
+    "srixon australian womens stroke play & amateur": [
+      "golf"
+    ],
+    "srixon australian mens stroke play & amateur": [
+      "golf"
+    ],
+    "subaru mens victorian open": [
+      "golf"
+    ],
+    "southern cross cup": [
+      "golf"
+    ],
+    "srixon australian mens stroke play and amateur": [
+      "golf"
+    ],
+    "south pacific ladies classic": [
+      "golf"
+    ],
+    "south pacific ladies masters": [
+      "golf"
+    ],
+    "srixon australian womens amateur": [
+      "golf"
+    ],
+    "srixon australian mens amateur": [
+      "golf"
+    ],
+    "sanctuary cove trophy": [
+      "golf"
+    ],
+    "srixon international junior classic": [
+      "golf"
+    ],
+    "south pacific ladies open classic": [
+      "golf"
+    ],
+    "srixon junior championship": [
+      "golf"
+    ],
+    "south pacific ladies seniors classic": [
+      "golf"
+    ],
+    "sunshine coast ladies open": [
+      "golf"
+    ],
+    "southern cross invitational": [
+      "golf"
+    ],
+    "sa mens & womens senior amateur": [
+      "golf"
+    ],
+    "south pacific ladies senior classic": [
+      "golf"
+    ],
+    "series": [
+      "triathlon",
+      "canoeing",
+      "handball",
+      "archery",
+      "softball"
+    ],
+    "slalom": [
+      "canoeing"
+    ],
+    "sprint": [
+      "canoeing"
+    ],
+    "super globe": [
+      "handball"
+    ],
+    "skeet": [
+      "shooting"
+    ],
+    "shotgun": [
+      "shooting"
+    ],
+    "sailing world cup melbourne": [
+      "sailing"
+    ],
+    "summer olymics": [
+      "triathlon"
+    ],
+    "singleton": [
+      "triathlon"
+    ],
+    "super sprint": [
+      "triathlon"
+    ],
+    "southern crosse": [
+      "lacrosse"
+    ],
+    "southern university games": [
+      "lacrosse"
+    ],
+    "speedway": [
+      "motorcycle racing"
+    ],
+    "supermoto": [
+      "motorcycle racing"
+    ],
+    "season": [
+      "rugby"
+    ],
+    "super rugby": [
+      "rugby union"
+    ],
+    "suncorp super netball": [
+      "netball"
+    ]
+  },
+  "c": {
+    "championships": [
+      "weightlifting",
+      "boxing",
+      "baseball",
+      "bullriding",
+      "table tennis",
+      "triathlon",
+      "badminton",
+      "squash",
+      "diving",
+      "gymnastics",
+      "ice skating",
+      "hockey",
+      "volleyball",
+      "handball",
+      "softball",
+      "pentathlon",
+      "equestrian",
+      "swimming",
+      "wrestling",
+      "shooting"
+    ],
+    "continental cup": [
+      "volleyball"
+    ],
+    "classic": [
+      "motorcycle racing",
+      "squash",
+      "cycling",
+      "dancesport",
+      "bodybuilding"
+    ],
+    "challenge": [
+      "cycling",
+      "dancesport"
+    ],
+    "cadel evans great ocean road race": [
+      "cycling"
+    ],
+    "collie donnybrook classic": [
+      "cycling"
+    ],
+    "commonwealth games": [
+      "weightlifting",
+      "squash",
+      "diving",
+      "archery",
+      "wrestling",
+      "shooting"
+    ],
+    "cup": [
+      "motorcycle racing",
+      "sailing",
+      "hockey",
+      "handball",
+      "softball",
+      "equestrian",
+      "wrestling"
+    ],
+    "competition": [
+      "wrestling",
+      "dancesport"
+    ],
+    "canberra cup": [
+      "wrestling",
+      "squash"
+    ],
+    "commonwealth team camp": [
+      "wrestling"
+    ],
+    "champions trophy": [
+      "hockey",
+      "cricket"
+    ],
+    "championship": [
+      "weightlifting",
+      "motorcycle racing",
+      "skating",
+      "kickboxing",
+      "golf",
+      "supercars",
+      "sailing",
+      "dancesport",
+      "fencing",
+      "canoeing",
+      "bodybuilding",
+      "water polo",
+      "archery",
+      "equestrian",
+      "rugby union",
+      "taekwondo",
+      "netball",
+      "karate",
+      "darts"
+    ],
+    "challenge tour": [
+      "darts"
+    ],
+    "clash on the coast": [
+      "crossfit"
+    ],
+    "commonwealth youth games": [
+      "boxing"
+    ],
+    "cairns open": [
+      "squash"
+    ],
+    "crookwell vintage": [
+      "squash"
+    ],
+    "commonwealth games selection trials": [
+      "diving"
+    ],
+    "championship bull riding": [
+      "bullriding"
+    ],
+    "cadet and under 15": [
+      "fencing"
+    ],
+    "commonwealth trophy": [
+      "golf"
+    ],
+    "commemoration cup": [
+      "golf"
+    ],
+    "city of sydney amateur international": [
+      "golf"
+    ],
+    "coastal digestive health sunshine coast open championship": [
+      "golf"
+    ],
+    "callaway junior championship": [
+      "golf"
+    ],
+    "clay pidgeon": [
+      "shooting"
+    ],
+    "contest": [
+      "triathlon"
+    ],
+    "coffs harbour": [
+      "triathlon"
+    ],
+    "clouds 2 coast jurien bay": [
+      "triathlon"
+    ],
+    "challenge shepparton": [
+      "triathlon"
+    ],
+    "cvtc": [
+      "triathlon"
+    ],
+    "canada day lacrosse tournament": [
+      "lacrosse"
+    ],
+    "canada cup": [
+      "softball"
+    ],
+    "classic motocross": [
+      "motorcycle racing"
+    ],
+    "commonwealth bank trophy": [
+      "netball"
+    ]
+  },
+  "k": {
+    "king/queen of the beach": [
+      "volleyball"
+    ],
+    "kookaburra bowl": [
+      "gridiron"
+    ],
+    "karadinga junion": [
+      "squash"
+    ],
+    "kraft nabisco championship": [
+      "golf"
+    ],
+    "katherine hull classic": [
+      "golf"
+    ],
+    "katherine kirk classic": [
+      "golf"
+    ],
+    "keperra bowl": [
+      "golf"
+    ],
+    "kpmg lpga championship": [
+      "golf"
+    ],
+    "kiel week": [
+      "sailing"
+    ],
+    "kangaroo island": [
+      "triathlon"
+    ]
+  },
+  "a": {
+    "alcohol. think again beach tour": [
+      "volleyball"
+    ],
+    "australian masters championships": [
+      "rowing"
+    ],
+    "australian masters games": [
+      "boxing",
+      "softball",
+      "rowing"
+    ],
+    "amys ride": [
+      "cycling"
+    ],
+    "austral wheel race": [
+      "cycling"
+    ],
+    "asian indoor and martial arts games": [
+      "wrestling"
+    ],
+    "australian hockey league": [
+      "hockey"
+    ],
+    "australian age swimming championships": [
+      "swimming"
+    ],
+    "australian tour": [
+      "darts"
+    ],
+    "act open": [
+      "darts",
+      "table tennis",
+      "badminton"
+    ],
+    "australian grand prix pro tour": [
+      "darts"
+    ],
+    "australian open superseries": [
+      "badminton"
+    ],
+    "australian veterans championships": [
+      "table tennis"
+    ],
+    "australian figure skating championships": [
+      "ice skating"
+    ],
+    "australian open": [
+      "golf",
+      "archery",
+      "fencing",
+      "squash"
+    ],
+    "australian uni games": [
+      "squash"
+    ],
+    "australian doubles": [
+      "squash"
+    ],
+    "australian squash tour": [
+      "squash"
+    ],
+    "australian closed": [
+      "squash"
+    ],
+    "australian masters squash titles": [
+      "squash"
+    ],
+    "australian racquetball open": [
+      "squash"
+    ],
+    "acacia ridge tournament": [
+      "squash"
+    ],
+    "australian tri-series": [
+      "cricket"
+    ],
+    "aeronatical pentathlon": [
+      "pentathlon"
+    ],
+    "australian mlb invitational": [
+      "baseball"
+    ],
+    "arnold sports festival": [
+      "bodybuilding",
+      "kickboxing"
+    ],
+    "arnold pro strongman": [
+      "bodybuilding"
+    ],
+    "australian schools individual": [
+      "fencing"
+    ],
+    "australian school team": [
+      "fencing"
+    ],
+    "australian fencing circuit": [
+      "fencing"
+    ],
+    "asian cadet circuit": [
+      "fencing"
+    ],
+    "artistic roller skating nationals": [
+      "skating"
+    ],
+    "amateur": [
+      "golf"
+    ],
+    "australian girls amateur": [
+      "golf"
+    ],
+    "australian girls interstate teams matches": [
+      "golf"
+    ],
+    "australian womens stroke play": [
+      "golf"
+    ],
+    "australian mens foursomes": [
+      "golf"
+    ],
+    "australian mens amateur": [
+      "golf"
+    ],
+    "australian boys amateur": [
+      "golf"
+    ],
+    "australian boys interstate teams matches": [
+      "golf"
+    ],
+    "australian womens foursomes": [
+      "golf"
+    ],
+    "australian womens amateur": [
+      "golf"
+    ],
+    "australian womens interstate teams matches": [
+      "golf"
+    ],
+    "australian mens interstate team matches": [
+      "golf"
+    ],
+    "australian colts interstate teams matches": [
+      "golf"
+    ],
+    "asia pacific mens senior amateur": [
+      "golf"
+    ],
+    "australian boys order of merit": [
+      "golf"
+    ],
+    "australian school teams national final": [
+      "golf"
+    ],
+    "australian amateur championships": [
+      "golf"
+    ],
+    "australian mens interstate teams matches": [
+      "golf"
+    ],
+    "australian mens senior match play": [
+      "golf"
+    ],
+    "australian senior order of merit": [
+      "golf"
+    ],
+    "australian school teams championship": [
+      "golf"
+    ],
+    "australian mens senior amateur": [
+      "golf"
+    ],
+    "australian womens senior amateur": [
+      "golf"
+    ],
+    "australian womens mid amateur": [
+      "golf"
+    ],
+    "australian mens mid amateur": [
+      "golf"
+    ],
+    "asian amateur": [
+      "golf"
+    ],
+    "aaron baddeley world junior - aus final": [
+      "golf"
+    ],
+    "australian secondary schools teams championship": [
+      "golf"
+    ],
+    "australian master of the amateurs": [
+      "golf"
+    ],
+    "arafura games": [
+      "golf"
+    ],
+    "aaron baddeley junior aus final": [
+      "golf"
+    ],
+    "asia pacific senior amateur": [
+      "golf"
+    ],
+    "asia-pac world schools challenge": [
+      "golf"
+    ],
+    "asia-pacific amateur": [
+      "golf"
+    ],
+    "australian mid amateurs": [
+      "golf"
+    ],
+    "australian schools teams cship": [
+      "golf"
+    ],
+    "australian amateur": [
+      "golf"
+    ],
+    "alice springs junior open": [
+      "golf"
+    ],
+    "australian youth olympic festival": [
+      "golf"
+    ],
+    "australian mens & womens foursomes": [
+      "golf"
+    ],
+    "australian girls interstate matches": [
+      "golf"
+    ],
+    "australian boys interstate matches": [
+      "golf"
+    ],
+    "aust interstate teams matches": [
+      "golf"
+    ],
+    "aust womens interstate matches": [
+      "golf"
+    ],
+    "aust mens interstate matches": [
+      "golf"
+    ],
+    "adf v ga senior match": [
+      "golf"
+    ],
+    "australian master of the amateurs - qualifying": [
+      "golf"
+    ],
+    "aaron baddeley world junior - australian final": [
+      "golf"
+    ],
+    "australian mens & womens mid amateur": [
+      "golf"
+    ],
+    "australian indigenous championship": [
+      "golf"
+    ],
+    "asia-pacific senior amateur championship": [
+      "golf"
+    ],
+    "aust girls interstate matches": [
+      "golf"
+    ],
+    "aust boys interstate matches": [
+      "golf"
+    ],
+    "australian mens and womens foursomes": [
+      "golf"
+    ],
+    "australian interstate teams matches": [
+      "golf"
+    ],
+    "asia-pacific senior amateur": [
+      "golf"
+    ],
+    "astor trophy": [
+      "golf"
+    ],
+    "alice springs junior open (paul pearson cup)": [
+      "golf"
+    ],
+    "australian amateur championship": [
+      "golf"
+    ],
+    "ana inspiration championship": [
+      "golf"
+    ],
+    "australian girls interstate teams": [
+      "golf"
+    ],
+    "australian boys interstate teams": [
+      "golf"
+    ],
+    "australian womens interstate teams": [
+      "golf"
+    ],
+    "australian mens interstate teams": [
+      "golf"
+    ],
+    "asia-pacific amateur championship": [
+      "golf"
+    ],
+    "apgc senior amateur championship": [
+      "golf"
+    ],
+    "asian games": [
+      "archery"
+    ],
+    "australian national water polo league": [
+      "water polo"
+    ],
+    "australian handball club championship": [
+      "handball"
+    ],
+    "australian national handball championship": [
+      "handball"
+    ],
+    "australian national championships": [
+      "sailing",
+      "taekwondo"
+    ],
+    "aquece rio": [
+      "sailing"
+    ],
+    "agnes": [
+      "triathlon"
+    ],
+    "all schools": [
+      "triathlon"
+    ],
+    "anzac commemoration games": [
+      "lacrosse"
+    ],
+    "ala national conference": [
+      "lacrosse"
+    ],
+    "australian club championship": [
+      "lacrosse"
+    ],
+    "australia cup": [
+      "softball"
+    ],
+    "atv": [
+      "motorcycle racing"
+    ],
+    "anzac test": [
+      "rugby"
+    ],
+    "auckland nines": [
+      "rugby"
+    ],
+    "australian national rugby championship": [
+      "rugby union"
+    ],
+    "australian netball league": [
+      "netball"
+    ],
+    "anz championship": [
+      "netball"
+    ],
+    "a-league": [
+      "soccer"
+    ],
+    "afc cup": [
+      "soccer"
+    ],
+    "asian cup": [
+      "soccer"
+    ]
+  },
+  "n": {
+    "november knockout": [
+      "volleyball"
+    ],
+    "national road series": [
+      "cycling"
+    ],
+    "national madison championships": [
+      "cycling"
+    ],
+    "national para-cycling series": [
+      "cycling"
+    ],
+    "nationals": [
+      "motorcycle racing",
+      "skating",
+      "wrestling"
+    ],
+    "newcastle 500": [
+      "supercars"
+    ],
+    "new year bash": [
+      "squash"
+    ],
+    "national pony club championships": [
+      "pentathlon"
+    ],
+    "naval pentathalon": [
+      "pentathlon"
+    ],
+    "national finals": [
+      "bullriding"
+    ],
+    "november cup": [
+      "dancesport"
+    ],
+    "nsw dressage championships": [
+      "equestrian"
+    ],
+    "nissan australian school teams championship (national final)": [
+      "golf"
+    ],
+    "nsw womens 72-hole stroke play": [
+      "golf"
+    ],
+    "national indigenous golf championships": [
+      "golf"
+    ],
+    "nsw womens 72 hole stroke play": [
+      "golf"
+    ],
+    "nsw womens amateur": [
+      "golf"
+    ],
+    "nsw womens 72-hole stroke play & amateur": [
+      "golf"
+    ],
+    "national indigenious championship": [
+      "golf"
+    ],
+    "next property group sunshine coast ladies open amateur": [
+      "golf"
+    ],
+    "nudgee masters classic": [
+      "golf"
+    ],
+    "national aboriginal & torres strait islander cships": [
+      "golf"
+    ],
+    "nomura cup": [
+      "golf"
+    ],
+    "national aboriginal & torres strait islander championships": [
+      "golf"
+    ],
+    "national club championships": [
+      "water polo"
+    ],
+    "newcastle": [
+      "triathlon"
+    ],
+    "nepean weekend": [
+      "triathlon"
+    ],
+    "noosa": [
+      "triathlon"
+    ],
+    "north head": [
+      "triathlon"
+    ],
+    "national championship": [
+      "softball",
+      "lacrosse"
+    ],
+    "nab afl women": [
+      "football"
+    ],
+    "national basketball league": [
+      "basketball"
+    ],
+    "national netball championships": [
+      "netball"
+    ]
+  },
+  "v": {
+    "volleyfest": [
+      "volleyball"
+    ],
+    "volley masters": [
+      "volleyball"
+    ],
+    "v8 supercars": [
+      "supercars"
+    ],
+    "vmsa ballarat": [
+      "squash"
+    ],
+    "victorian premier cricket": [
+      "cricket"
+    ],
+    "victorian regionals": [
+      "bodybuilding"
+    ],
+    "veteran fencing": [
+      "fencing"
+    ],
+    "vic womens 72-hole stroke play": [
+      "golf"
+    ],
+    "victorian womens 72 hole stroke play": [
+      "golf"
+    ],
+    "victorian womens 72-hole stroke play": [
+      "golf"
+    ],
+    "victorian womens amateur": [
+      "golf"
+    ],
+    "victorian womens stroke play": [
+      "golf"
+    ],
+    "victorian junior girls": [
+      "golf"
+    ],
+    "victorian junior girls championship": [
+      "golf"
+    ],
+    "victorian boys & girls championship": [
+      "golf"
+    ],
+    "victoria selection": [
+      "taekwondo"
+    ],
+    "victorias premier": [
+      "triathlon"
+    ]
+  },
+  "g": {
+    "grand champions cup": [
+      "volleyball"
+    ],
+    "grafton to inverell": [
+      "cycling"
+    ],
+    "grafton to inverell cyclosportif": [
+      "cycling"
+    ],
+    "giro d’perth": [
+      "cycling"
+    ],
+    "goldfields cyclassic": [
+      "cycling"
+    ],
+    "games": [
+      "skating",
+      "canoeing",
+      "lacrosse",
+      "hockey",
+      "crossfit",
+      "archery",
+      "water polo",
+      "handball",
+      "karate",
+      "softball",
+      "baseball"
+    ],
+    "grand masters world cup": [
+      "hockey"
+    ],
+    "gold coast 600": [
+      "supercars"
+    ],
+    "grand prix": [
+      "motorcycle racing",
+      "swimming",
+      "darts",
+      "canoeing"
+    ],
+    "grand slam of darts": [
+      "darts"
+    ],
+    "gold coast grand prix": [
+      "diving"
+    ],
+    "go-rounds": [
+      "bullriding"
+    ],
+    "glass house dancesport classic": [
+      "dancesport"
+    ],
+    "girls qld amateur": [
+      "golf"
+    ],
+    "girls nt amateur": [
+      "golf"
+    ],
+    "gmjgf championship": [
+      "golf"
+    ],
+    "girls nsw amateur": [
+      "golf"
+    ],
+    "girls qld stroke play": [
+      "golf"
+    ],
+    "girls victorian amateur": [
+      "golf"
+    ],
+    "girls wa amateur": [
+      "golf"
+    ],
+    "gary player classic": [
+      "golf"
+    ],
+    "gmjgf junior championship": [
+      "golf"
+    ],
+    "golf sa mens senior amateur": [
+      "golf"
+    ],
+    "girls vic amateur": [
+      "golf"
+    ],
+    "ga seniors v adf": [
+      "golf"
+    ],
+    "greg norman junior masters": [
+      "golf"
+    ],
+    "golf australia junior camp": [
+      "golf"
+    ],
+    "golf australia usa national camp": [
+      "golf"
+    ],
+    "golf australia national camp": [
+      "golf"
+    ],
+    "gloria jean mens nsw open": [
+      "golf"
+    ],
+    "ga national camp": [
+      "golf"
+    ],
+    "golf sa mens & womens senior amateur": [
+      "golf"
+    ],
+    "game": [
+      "handball",
+      "softball",
+      "lacrosse"
+    ],
+    "garmin tri series": [
+      "triathlon"
+    ],
+    "gatti": [
+      "triathlon"
+    ],
+    "golden wattle tournament": [
+      "lacrosse"
+    ],
+    "grand final": [
+      "rugby",
+      "football"
+    ]
+  },
+  "i": {
+    "international tours": [
+      "gymnastics"
+    ],
+    "international festival of hockey": [
+      "hockey"
+    ],
+    "ipswich supersprint": [
+      "supercars"
+    ],
+    "international qualifiers": [
+      "darts"
+    ],
+    "international series": [
+      "water polo",
+      "badminton"
+    ],
+    "international club tournament": [
+      "weightlifting"
+    ],
+    "icc super series": [
+      "cricket"
+    ],
+    "international": [
+      "bodybuilding"
+    ],
+    "international world games": [
+      "kickboxing"
+    ],
+    "incline hockey nationals": [
+      "skating"
+    ],
+    "imagetec mens nsw medal & am": [
+      "golf"
+    ],
+    "isps handa womens australian open": [
+      "golf"
+    ],
+    "isps handa junior masters": [
+      "golf"
+    ],
+    "isps handa australian senior open": [
+      "golf"
+    ],
+    "isps handa womens aus open": [
+      "golf"
+    ],
+    "isps handa senior australian open": [
+      "golf"
+    ],
+    "isuzu queensland open": [
+      "golf"
+    ],
+    "international friendly": [
+      "water polo"
+    ],
+    "intercontinental ihf trophy": [
+      "handball"
+    ],
+    "illawarra": [
+      "triathlon"
+    ],
+    "ironman": [
+      "triathlon"
+    ],
+    "internationals": [
+      "lacrosse"
+    ],
+    "international fil": [
+      "lacrosse"
+    ],
+    "international aspac": [
+      "lacrosse"
+    ]
+  },
+  "u": {
+    "university games": [
+      "baseball",
+      "diving",
+      "softball",
+      "rowing"
+    ],
+    "ultimate snowy challenge": [
+      "cycling"
+    ],
+    "uk open": [
+      "darts"
+    ],
+    "university cup": [
+      "squash"
+    ],
+    "ufe worlds": [
+      "bodybuilding"
+    ],
+    "universe international": [
+      "bodybuilding"
+    ],
+    "us masters": [
+      "golf"
+    ],
+    "us womens open": [
+      "golf"
+    ],
+    "uni 7s": [
+      "rugby union"
+    ]
+  },
+  "t": {
+    "trans-tasman regatta": [
+      "rowing"
+    ],
+    "trophy": [
+      "hockey"
+    ],
+    "touring car championship": [
+      "supercars"
+    ],
+    "townsville 400": [
+      "supercars"
+    ],
+    "tasmania supersprint": [
+      "supercars"
+    ],
+    "trials": [
+      "swimming",
+      "equestrian"
+    ],
+    "telstra skins": [
+      "swimming"
+    ],
+    "team series": [
+      "crossfit"
+    ],
+    "tournament": [
+      "boxing",
+      "skating",
+      "kickboxing",
+      "sailing",
+      "fencing",
+      "canoeing",
+      "handball",
+      "water polo",
+      "archery",
+      "lacrosse",
+      "softball",
+      "karate",
+      "taekwondo",
+      "baseball"
+    ],
+    "tour": [
+      "squash"
+    ],
+    "timed teams tournament": [
+      "squash"
+    ],
+    "tas junior open": [
+      "squash"
+    ],
+    "test match": [
+      "cricket"
+    ],
+    "the ashes": [
+      "cricket",
+      "golf"
+    ],
+    "tripleheader": [
+      "baseball",
+      "softball"
+    ],
+    "titles": [
+      "dancesport"
+    ],
+    "tabcorp park development": [
+      "dancesport"
+    ],
+    "tasmanian womens 72-hole stroke play": [
+      "golf"
+    ],
+    "the dunes medal": [
+      "golf"
+    ],
+    "trans tasman cup": [
+      "golf"
+    ],
+    "tasmanian womens amateur": [
+      "golf"
+    ],
+    "the open championship": [
+      "golf"
+    ],
+    "tasmanian junior masters": [
+      "golf"
+    ],
+    "tasmanian mens open": [
+      "golf"
+    ],
+    "tasmanian mens & womens amateur": [
+      "golf"
+    ],
+    "the national aboriginal golf championships": [
+      "golf"
+    ],
+    "the national senior masters championship": [
+      "golf"
+    ],
+    "the junior open championship": [
+      "golf"
+    ],
+    "the national senior masters": [
+      "golf"
+    ],
+    "the astor trophy": [
+      "golf"
+    ],
+    "tasco nsw boys amateur": [
+      "golf"
+    ],
+    "ten nations cup": [
+      "golf"
+    ],
+    "the grange senior open amateur": [
+      "golf"
+    ],
+    "the evian championship": [
+      "golf"
+    ],
+    "the boys amateur championship": [
+      "golf"
+    ],
+    "tasmanian womens senior, b & c grade": [
+      "golf"
+    ],
+    "the grange & kooyonga senior open amateur": [
+      "golf"
+    ],
+    "the australian amateur championships": [
+      "golf"
+    ],
+    "tamar valley junior cup": [
+      "golf"
+    ],
+    "trans tasman": [
+      "archery"
+    ],
+    "towards tokyo future olympians event": [
+      "water polo"
+    ],
+    "tournamanet": [
+      "shooting"
+    ],
+    "three positions": [
+      "shooting"
+    ],
+    "trap": [
+      "shooting"
+    ],
+    "tweed valley": [
+      "triathlon"
+    ],
+    "try-a-tri": [
+      "triathlon"
+    ],
+    "test": [
+      "lacrosse"
+    ],
+    "trial": [
+      "motorcycle racing"
+    ],
+    "track": [
+      "motorcycle racing"
+    ],
+    "toyota afl premiership": [
+      "football"
+    ],
+    "telstra premiership": [
+      "rugby"
+    ]
+  },
+  "b": {
+    "battle recharge": [
+      "cycling"
+    ],
+    "bay cycling classic": [
+      "cycling"
+    ],
+    "bmx world championships": [
+      "cycling"
+    ],
+    "buderim 9": [
+      "cycling"
+    ],
+    "bathurst 1000": [
+      "supercars"
+    ],
+    "banff experience": [
+      "crossfit"
+    ],
+    "bega open": [
+      "squash"
+    ],
+    "big bash": [
+      "cricket"
+    ],
+    "baseball down under": [
+      "baseball"
+    ],
+    "brisbane titles": [
+      "bodybuilding"
+    ],
+    "bushmens carnival": [
+      "bullriding"
+    ],
+    "ballroom spectacular": [
+      "dancesport"
+    ],
+    "berrima horse trials": [
+      "equestrian"
+    ],
+    "bout": [
+      "fencing"
+    ],
+    "bowl": [
+      "golf"
+    ],
+    "bonallack trophy": [
+      "golf"
+    ],
+    "boys qld amateur": [
+      "golf"
+    ],
+    "boys golf sa masters": [
+      "golf"
+    ],
+    "boys & girls sa amateur": [
+      "golf"
+    ],
+    "boys victorian junior masters": [
+      "golf"
+    ],
+    "boys tamar valley junior cup": [
+      "golf"
+    ],
+    "boys nt amateur": [
+      "golf"
+    ],
+    "boys victorian amateur": [
+      "golf"
+    ],
+    "boys nsw amateur": [
+      "golf"
+    ],
+    "boys wa amateur": [
+      "golf"
+    ],
+    "boys victorian masters": [
+      "golf"
+    ],
+    "boys & girls tamar valley cup": [
+      "golf"
+    ],
+    "boys & girls tas masters": [
+      "golf"
+    ],
+    "bing lee/samsung womens nsw open": [
+      "golf"
+    ],
+    "boys golf sa junior masters": [
+      "golf"
+    ],
+    "boys & girls tas junior masters": [
+      "golf"
+    ],
+    "boys & girls qld amateur": [
+      "golf"
+    ],
+    "boys & girls vic junior masters": [
+      "golf"
+    ],
+    "boys & girls sa junior masters": [
+      "golf"
+    ],
+    "boys & girls wa amateur": [
+      "golf"
+    ],
+    "boys & girls victorian junior masters": [
+      "golf"
+    ],
+    "boys & girls golf sa junior masters": [
+      "golf"
+    ],
+    "boys & girls nsw amateur": [
+      "golf"
+    ],
+    "bing lee fujitsu general womens nsw open": [
+      "golf"
+    ],
+    "boys & girls vic junior championship": [
+      "golf"
+    ],
+    "boys & girls junior of victoria": [
+      "golf"
+    ],
+    "bonallack & patsy hankins trophies": [
+      "golf"
+    ],
+    "balmoral": [
+      "triathlon"
+    ],
+    "barraman": [
+      "triathlon"
+    ]
+  },
+  "j": {
+    "junior track series": [
+      "cycling"
+    ],
+    "jayco herald sun tour": [
+      "cycling"
+    ],
+    "junior mountain climb championships": [
+      "cycling"
+    ],
+    "jack marsh cup": [
+      "cricket"
+    ],
+    "just dance cairns ballroom titles": [
+      "dancesport"
+    ],
+    "junior mens order of merit": [
+      "golf"
+    ],
+    "junior girls tasman cup": [
+      "golf"
+    ],
+    "jack newton international": [
+      "golf"
+    ],
+    "jack newton international classic": [
+      "golf"
+    ],
+    "jnjg international junior classic": [
+      "golf"
+    ],
+    "jnjg international": [
+      "golf"
+    ],
+    "jackie fairweather": [
+      "triathlon"
+    ],
+    "japan cup": [
+      "softball"
+    ],
+    "juniors": [
+      "motorcycle racing"
+    ],
+    "jlt community series": [
+      "football"
+    ]
+  },
+  "o": {
+    "omnium national championships": [
+      "cycling"
+    ],
+    "oceania road championship": [
+      "cycling"
+    ],
+    "open water swimming championships": [
+      "swimming"
+    ],
+    "opal bowl": [
+      "gridiron"
+    ],
+    "olympic games": [
+      "boxing",
+      "softball",
+      "taekwondo"
+    ],
+    "one day challenge": [
+      "squash"
+    ],
+    "one day cup": [
+      "cricket"
+    ],
+    "olympics": [
+      "triathlon",
+      "diving",
+      "handball",
+      "archery",
+      "softball",
+      "taekwondo",
+      "baseball",
+      "shooting"
+    ],
+    "olympic trials": [
+      "diving"
+    ],
+    "oceana international universe qualifier": [
+      "bodybuilding"
+    ],
+    "oxygen fitness": [
+      "bodybuilding"
+    ],
+    "odeo cowboys": [
+      "bullriding"
+    ],
+    "open": [
+      "golf"
+    ],
+    "open championship - australasia ifq": [
+      "golf"
+    ],
+    "olympic": [
+      "canoeing"
+    ],
+    "ocean racing": [
+      "canoeing"
+    ],
+    "olympiad": [
+      "handball"
+    ],
+    "oceania trophy tournament": [
+      "handball"
+    ],
+    "oceania championships": [
+      "taekwondo"
+    ],
+    "oceania": [
+      "motorcycle racing"
+    ]
+  },
+  "d": {
+    "downunder competition": [
+      "wrestling"
+    ],
+    "darwin triple crown": [
+      "supercars"
+    ],
+    "development tour": [
+      "darts"
+    ],
+    "darts masters": [
+      "darts"
+    ],
+    "dapto masters": [
+      "squash"
+    ],
+    "doubleheader": [
+      "baseball",
+      "softball"
+    ],
+    "diamond jubilee": [
+      "dancesport"
+    ],
+    "darwin senior open amateur": [
+      "golf"
+    ],
+    "double trap": [
+      "shooting"
+    ]
+  },
+  "p": {
+    "pirtek enduro cup": [
+      "supercars"
+    ],
+    "pole award": [
+      "supercars"
+    ],
+    "perth supersprint": [
+      "supercars"
+    ],
+    "phillip island 500": [
+      "supercars"
+    ],
+    "paralympic grand prix": [
+      "swimming"
+    ],
+    "premier league": [
+      "darts",
+      "soccer"
+    ],
+    "pdc pro tour": [
+      "darts"
+    ],
+    "pacific club international": [
+      "weightlifting"
+    ],
+    "prince super series": [
+      "squash"
+    ],
+    "prime ministers xi": [
+      "cricket"
+    ],
+    "platform": [
+      "diving"
+    ],
+    "plunge for distance": [
+      "diving"
+    ],
+    "plain high diving": [
+      "diving"
+    ],
+    "physique championships": [
+      "bodybuilding"
+    ],
+    "professional bull riders": [
+      "bullriding"
+    ],
+    "pony club championships": [
+      "equestrian"
+    ],
+    "presidents cup": [
+      "golf"
+    ],
+    "polo": [
+      "canoeing"
+    ],
+    "pistol": [
+      "shooting"
+    ],
+    "princess sofia": [
+      "sailing"
+    ],
+    "port club": [
+      "triathlon"
+    ],
+    "pink brisbane": [
+      "triathlon"
+    ],
+    "premiership": [
+      "rugby"
+    ],
+    "pacific test": [
+      "rugby"
+    ]
+  },
+  "5": {
+    "500 adelaide": [
+      "supercars"
+    ]
+  },
+  "f": {
+    "fight night": [
+      "crossfit"
+    ],
+    "feliks stamm": [
+      "boxing"
+    ],
+    "figure championships": [
+      "bodybuilding"
+    ],
+    "fremantle championship": [
+      "dancesport"
+    ],
+    "four nations cup": [
+      "golf"
+    ],
+    "final": [
+      "canoeing"
+    ],
+    "finals": [
+      "triathlon",
+      "sailing",
+      "lacrosse",
+      "handball",
+      "shooting"
+    ],
+    "fullbore": [
+      "shooting"
+    ],
+    "fitzroy frogs": [
+      "triathlon"
+    ],
+    "forster ultimate": [
+      "triathlon"
+    ],
+    "friendship games": [
+      "lacrosse"
+    ],
+    "four nations": [
+      "rugby"
+    ]
+  },
+  "e": {
+    "elite confederation boxing championships": [
+      "boxing"
+    ],
+    "elite australian test event": [
+      "boxing"
+    ],
+    "european fencing circuit": [
+      "fencing"
+    ],
+    "emirates mens australian open": [
+      "golf"
+    ],
+    "emirates australian open": [
+      "golf"
+    ],
+    "event": [
+      "triathlon",
+      "sailing",
+      "canoeing",
+      "water polo",
+      "archery",
+      "taekwondo"
+    ],
+    "events": [
+      "sailing",
+      "triathlon",
+      "shooting"
+    ],
+    "emerald trifecta": [
+      "triathlon"
+    ],
+    "enduro": [
+      "motorcycle racing"
+    ]
+  },
+  "q": {
+    "queensland open": [
+      "squash"
+    ],
+    "qld womens 72-hole stroke play": [
+      "golf"
+    ],
+    "queen sirikit cup": [
+      "golf"
+    ],
+    "qld womens 72 hole stroke play": [
+      "golf"
+    ],
+    "queensland womens amateur": [
+      "golf"
+    ],
+    "qld mens and womens amateur championship": [
+      "golf"
+    ]
+  },
+  "x": {
+    "xmas cup": [
+      "squash"
+    ],
+    "xtreme bulls tour": [
+      "bullriding"
+    ]
+  },
+  "y": {
+    "young dressage association championships": [
+      "equestrian"
+    ],
+    "yarrawonga mulwala": [
+      "triathlon"
+    ]
+  },
+  "h": {
+    "handa australian senior open": [
+      "golf"
+    ],
+    "handa senior open": [
+      "golf"
+    ],
+    "handa womens australian open": [
+      "golf"
+    ],
+    "hong kong lacrosse open": [
+      "lacrosse"
+    ],
+    "historic road racing": [
+      "motorcycle racing"
+    ],
+    "holden cup": [
+      "rugby"
+    ]
+  },
+  "3": {
+    "3 positions": [
+      "shooting"
+    ]
+  },
+  "2": {
+    "24th left bank": [
+      "triathlon"
+    ]
+  }
+}

@@ -1,0 +1,337 @@
+{
+  "swatch": [
+    "volleyball"
+  ],
+  "suzuki": [
+    "gymnastics"
+  ],
+  "subaru": [
+    "cycling"
+  ],
+  "jayco": [
+    "cycling"
+  ],
+  "hp": [
+    "wrestling"
+  ],
+  "dunlop": [
+    "supercars"
+  ],
+  "ecb": [
+    "supercars"
+  ],
+  "armor all": [
+    "supercars"
+  ],
+  "red rooster": [
+    "supercars"
+  ],
+  "supercheap auto": [
+    "supercars"
+  ],
+  "coates hire": [
+    "supercars"
+  ],
+  "watpac": [
+    "supercars"
+  ],
+  "vodafone": [
+    "cricket",
+    "supercars"
+  ],
+  "clipsal": [
+    "supercars"
+  ],
+  "tyrepower": [
+    "supercars"
+  ],
+  "crownbet": [
+    "supercars"
+  ],
+  "wd-40": [
+    "supercars"
+  ],
+  "wilson security": [
+    "supercars"
+  ],
+  "zkc": [
+    "weightlifting"
+  ],
+  "reebok": [
+    "crossfit"
+  ],
+  "volkswagen": [
+    "squash"
+  ],
+  "briars": [
+    "squash"
+  ],
+  "pura milk": [
+    "cricket"
+  ],
+  "pura": [
+    "cricket"
+  ],
+  "weet-bix": [
+    "cricket"
+  ],
+  "bupa": [
+    "cricket"
+  ],
+  "mercantile": [
+    "cricket"
+  ],
+  "ing": [
+    "cricket"
+  ],
+  "ford ranger": [
+    "cricket"
+  ],
+  "ryobi": [
+    "cricket"
+  ],
+  "matador bbqs": [
+    "cricket"
+  ],
+  "jlt": [
+    "football",
+    "cricket"
+  ],
+  "kfc": [
+    "cricket"
+  ],
+  "carlton": [
+    "cricket"
+  ],
+  "vb": [
+    "cricket"
+  ],
+  "commonwealth bank": [
+    "cricket",
+    "netball"
+  ],
+  "carlton mid": [
+    "cricket"
+  ],
+  "johnnie walker": [
+    "cricket"
+  ],
+  "ais": [
+    "archery",
+    "baseball",
+    "diving",
+    "equestrian"
+  ],
+  "funky trucks": [
+    "diving"
+  ],
+  "funkita": [
+    "diving"
+  ],
+  "canterbury": [
+    "diving"
+  ],
+  "vis": [
+    "diving"
+  ],
+  "wais": [
+    "diving"
+  ],
+  "uipm": [
+    "pentathlon"
+  ],
+  "majestic athletic": [
+    "baseball"
+  ],
+  "boral": [
+    "baseball"
+  ],
+  "strideline": [
+    "baseball"
+  ],
+  "locale travel": [
+    "baseball"
+  ],
+  "mysportstape.com": [
+    "baseball"
+  ],
+  "virgin australia": [
+    "baseball"
+  ],
+  "bendigo bank": [
+    "baseball"
+  ],
+  "v-insurance group": [
+    "baseball",
+    "softball",
+    "triathlon"
+  ],
+  "hertz": [
+    "baseball"
+  ],
+  "horeleys": [
+    "bodybuilding"
+  ],
+  "bulk nutrients": [
+    "bodybuilding"
+  ],
+  "just add muscle": [
+    "bodybuilding"
+  ],
+  "optimum nutrition": [
+    "bodybuilding"
+  ],
+  "oxygen magazine": [
+    "bodybuilding"
+  ],
+  "sportys health": [
+    "bodybuilding"
+  ],
+  "mikes discount": [
+    "bodybuilding"
+  ],
+  "musashi": [
+    "bodybuilding"
+  ],
+  "muscle beach": [
+    "bodybuilding"
+  ],
+  "supplements 101": [
+    "bodybuilding"
+  ],
+  "powerhouse nutrition": [
+    "bodybuilding"
+  ],
+  "horse & country": [
+    "equestrian"
+  ],
+  "adina apartment hotels": [
+    "equestrian"
+  ],
+  "ram": [
+    "equestrian"
+  ],
+  "prydes": [
+    "equestrian"
+  ],
+  "lg": [
+    "golf"
+  ],
+  "bing lee": [
+    "golf"
+  ],
+  "pats": [
+    "archery"
+  ],
+  "benson": [
+    "archery"
+  ],
+  "easton": [
+    "archery"
+  ],
+  "domino": [
+    "archery"
+  ],
+  "target": [
+    "archery"
+  ],
+  "hoyt": [
+    "archery"
+  ],
+  "joma": [
+    "handball"
+  ],
+  "select": [
+    "handball"
+  ],
+  "discover sailing": [
+    "sailing"
+  ],
+  "tackers": [
+    "sailing"
+  ],
+  "sailability": [
+    "sailing"
+  ],
+  "rya training": [
+    "sailing"
+  ],
+  "scoody": [
+    "triathlon"
+  ],
+  "star outdoor": [
+    "triathlon"
+  ],
+  "active network": [
+    "triathlon"
+  ],
+  "trainingpeaks": [
+    "triathlon"
+  ],
+  "headsweats": [
+    "triathlon"
+  ],
+  "high sierra": [
+    "triathlon"
+  ],
+  "qscan radiology": [
+    "triathlon"
+  ],
+  "under armour": [
+    "lacrosse"
+  ],
+  "acland travel": [
+    "lacrosse"
+  ],
+  "accor hotels": [
+    "softball"
+  ],
+  "sportslink international": [
+    "softball"
+  ],
+  "ofx": [
+    "softball"
+  ],
+  "stage and screen": [
+    "softball"
+  ],
+  "flourish": [
+    "softball"
+  ],
+  "sportingpulse": [
+    "motorcycle racing"
+  ],
+  "toyota": [
+    "football"
+  ],
+  "nab": [
+    "football"
+  ],
+  "telstra": [
+    "rugby"
+  ],
+  "holden": [
+    "rugby"
+  ],
+  "qantas": [
+    "rugby union"
+  ],
+  "ihg": [
+    "rugby union"
+  ],
+  "hahn superdry": [
+    "rugby union"
+  ],
+  "hungry jacks": [
+    "basketball"
+  ],
+  "anz": [
+    "netball"
+  ],
+  "suncorp": [
+    "netball"
+  ],
+  "hyundai": [
+    "soccer"
+  ]
+}
