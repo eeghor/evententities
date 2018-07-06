@@ -94,21 +94,35 @@ class Event:
 
 	def show(self):
 
-		print(f'id: {self._ev_id}')
-		print(f'description: {self.description}')
-		print('labels:')
-		pprint(self._labels)
-		print(f'entertainment type: {self.entertainment}')
+		print()
+		print(f'ID:')
+		print(f'{" ":>18}{self._ev_id}')
+		print(f'DESCRIPTION:')
+		print(f'{" ":>18}{self.description}')
+		print('LABELS:')
+		print()
+		for lab in self._labels:
+			print(f'{lab:>16}: {", ".join(self._labels[lab])}')
+		print()
+		print(f'ENTERTAINMENT TYPE: {self.entertainment}')
+		print()
 
 	def get_type(self):
 		"""
 		decide what event type it is based on labels
 		"""
-		# if 'life_coaches' in self._labels:
-		# 	self.entertainment = 'life_coaches'
+		words_in_descr_ = set(self.description.lower().split())
+		descr_norm_ = ' '.join(self.description.lower().split())
 
-		if {'artists', 'promoters'} < set(self._labels):
-			self.entertainment = 'concert'
+		conditions = {'concert': any([{'artists', 'promoters'} < set(self._labels),
+										('artists' in self._labels) and ({'guest', 'featuring', 'feat', 'with', 
+											'headline', 'presents', 'vinyl', 'cd', 'tour'} & words_in_descr_),
+												'doors open' in descr_norm_])}
+		for tp in conditions:
+
+			if conditions[tp]:
+				self.entertainment = tp
+				break
 
 		return self
 	
@@ -137,15 +151,16 @@ class EventFeatureFactory(ArtistNameNormaliser):
 
 		self._teams, self._sport_names, self._tournaments, \
 			self._tournament_types, self._sponsors, self._sport_venues, self._sport_abb = \
-				[json.load(open(os.path.join(self.DATA_DIR, self.SPORTS_DIR, f))) 
-			for f in ['teams.json', 
-						'sport-names.json', 
-							'tournaments.json',
-								'tournament-types.json',
-									'sponsors.json',
-										'sport-venues.json',
-											'sport-abbrs.json']]
+				[json.load(open(os.path.join(self.DATA_DIR, self.SPORTS_DIR, f + '.json'))) 
+			for f in ['teams', 
+						'sport-names', 
+							'tournaments',
+								'tournament-types',
+									'sponsors',
+										'sport-venues',
+											'sport-abbrs']]
 		# music
+
 		self._promoters = json.load(open(os.path.join(self.DATA_DIR, 'data_promoters.json')))
 		self._music_venues = json.load(open(os.path.join(self.DATA_DIR, 'data_music-venues.json')))
 
@@ -164,8 +179,24 @@ class EventFeatureFactory(ArtistNameNormaliser):
 		self._countries =  json.load(open(os.path.join(self.DATA_DIR, 'data_countries.json')))
 		self._suburbs = json.load(open(os.path.join(self.DATA_DIR, 'data_suburbs.json')))
 
-		self._comedians = json.load(open(os.path.join(self.DATA_DIR, 'data_comedians.json')))
-		self._opera_singers = json.load(open(os.path.join(self.DATA_DIR, 'data_opera-singers.json')))
+		# opera
+
+		self.OPERA_DIR = 'opera'
+
+		self._opera_singers = json.load(open(os.path.join(self.DATA_DIR, self.OPERA_DIR, 'singers.json')))
+
+		# comedy
+
+		self.COMEDY_DIR = 'comedy'
+
+		self._comedians = json.load(open(os.path.join(self.DATA_DIR, self.COMEDY_DIR, 'comedians.json')))
+
+		# special interests
+
+		self.SPECIAL_DIR = 'special'
+
+		self._life_coaches, self._boxers = [json.load(open(os.path.join(self.DATA_DIR, self.SPECIAL_DIR, f + '.json'))) 
+												for f in ['life_coaches', 'boxers']]
 
 		self._companies = json.load(open(os.path.join(self.DATA_DIR, 'data_companies.json')))
 
@@ -175,7 +206,7 @@ class EventFeatureFactory(ArtistNameNormaliser):
 		
 		self._purchase_types = json.load(open(os.path.join(self.DATA_DIR, 'data_purchase-types.json')))
 
-		self._life_coaches = json.load(open(os.path.join(self.DATA_DIR, 'life_coaches.json')))
+		
 
 		self._NES = {'suburbs': self._suburbs, 
 					 'musicals': self._musicals, 
@@ -196,7 +227,8 @@ class EventFeatureFactory(ArtistNameNormaliser):
 					 'sponsors': self._sponsors,
 					 'purchase_types': self._purchase_types, 
 					 'comedians': self._comedians,
-					 'life_coaches': self._life_coaches}
+					 'life_coaches': self._life_coaches,
+					 'boxers': self._boxers}
 
 	def _deabbreviate(self, st):
 		"""
@@ -366,7 +398,7 @@ class EventFeatureFactory(ArtistNameNormaliser):
 if __name__ == '__main__':
 
 	e = Event(event_id='123ddf',
-				description='anz stadium robbie williams guest CHET FAKER tickets from $100 -- Newtown NSW vivid sydney')
+				description='anz stadium chvrches /vivid sydney doors open 17:30 wednesday -- special guest ARIE MALINIAK &. steven rudic')
 	
 	eff = EventFeatureFactory()
 	
