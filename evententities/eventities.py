@@ -1,5 +1,4 @@
 from collections import defaultdict
-from itertools import chain
 import pandas as pd
 import json
 import arrow
@@ -596,7 +595,7 @@ class EventFeatureFactory(ArtistNameNormaliser):
 			pks_processed.append(event[1]['pk_event_dim'])
 			evs_processed.append(e.to_json())
 		
-		with open(self.OLDEVENT_FILENAME, 'a') as f:
+		with open(self.OLDEVENT_FILE, 'a') as f:
 			for k in pks_processed:
 				f.write(f'{k}\n')
 
