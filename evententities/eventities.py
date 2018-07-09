@@ -10,6 +10,7 @@ import os
 import time
 import enchant
 from artistnormaliser import ArtistNameNormaliser
+from eventcollector import EventTableGetter
 from typing import NamedTuple
 from pprint import pprint
 
@@ -122,7 +123,8 @@ class Event:
 
 					  'special interest': {'boxers', 'psychics', 'life_coaches', 'motivational_speakers'} & set(self._labels),
 					  'sport': any([len(self._labels.get('teams', [])) == 2,
-					  					{'sport_venues', 'sport_names'} < set(self._labels)])}
+					  					{'sport_venues', 'sport_names'} < set(self._labels)]),
+					  'circus': 'circuses' in self._labels}
 
 		for tp in conditions:
 
@@ -416,13 +418,32 @@ class EventFeatureFactory(ArtistNameNormaliser):
 
 if __name__ == '__main__':
 
-	e = Event(event_id='123ddf',
-				description='qudos bank arena australia manchester city v barcelona 17:30 wednesday d12 the doors and cold cut dj')
-	
+	t = EventTableGetter().start_session('creds/rds.txt').find_new_events().get_events()
+
+	t.close_session()
+
+	t.save()	
+
+	descr_cols = list(t.events_.columns[1:])
+
 	eff = EventFeatureFactory()
+
+	pks_processed = []
+
+	for i, event in enumerate(t.events_.iloc[:100].iterrows(),1):
+
+		e = Event(event_id=event[1]['pk_event_dim'],
+					description= ' ' .join([str(event[1][c]) for c in descr_cols]))
 	
-	e._labels = eff.get_labels(e.description)
+		e._labels = eff.get_labels(e.description)
 
-	e.get_type()
+		e.get_type()
 
-	e.show()
+		e.show()
+
+		pks_processed.append(event[1]['pk_event_dim'])
+
+	with open(f'{t.OLDEVENT_DIR}/{t.OLDEVENT_FILE}', 'a') as f:
+		for k in pks_processed:
+			f.write(f'{k}\n')
+
