@@ -7,12 +7,13 @@ from weakref import WeakKeyDictionary
 import string
 import re
 import os
-import time
 import enchant
 from artistnormaliser import ArtistNameNormaliser
-from eventcollector import EventTableGetter
 from typing import NamedTuple
-from pprint import pprint
+
+import time
+import sqlalchemy
+from sqlalchemy.orm.session import sessionmaker
 
 
 class Artist(NamedTuple):
@@ -31,8 +32,8 @@ class String:
 
 	"""
 	descriptor that requires property to be a string; for explanation of descriptors
- 	see http://nbviewer.jupyter.org/urls/gist.github.com/ChrisBeaumont/5758381/raw/descriptor_writeup.ipynb
- 	"""
+	see http://nbviewer.jupyter.org/urls/gist.github.com/ChrisBeaumont/5758381/raw/descriptor_writeup.ipynb
+	"""
 
 	def __init__(self, value_default):
 
@@ -123,7 +124,7 @@ class Event:
 
 					  'special interest': {'boxers', 'psychics', 'life_coaches', 'motivational_speakers'} & set(self._labels),
 					  'sport': any([len(self._labels.get('teams', [])) == 2,
-					  					{'sport_venues', 'sport_names'} < set(self._labels)]),
+										{'sport_venues', 'sport_names'} < set(self._labels)]),
 					  'circus': 'circuses' in self._labels}
 
 		for tp in conditions:
@@ -133,13 +134,42 @@ class Event:
 				break
 
 		return self
+
+	def to_json(self):
+
+		return {**{'event_id': self._ev_id, 'type': self.entertainment}, **{l: list(self._labels[l]) for l in self._labels}}
 	
 
 class EventFeatureFactory(ArtistNameNormaliser):
+	
 	"""
-	extract entities from event description
+	class to connect to venue tables and get all useful data
 	"""
-	def __init__(self):
+	def __init__(self, reset_tracking=False):
+
+		self.EVENT_TBL = 'DWSales.dbo.event_dim'
+
+		self.NEWEVENT_DIR = os.path.join(os.path.curdir, 'new_events')
+		self.OLDEVENT_DIR = os.path.join(os.path.curdir, 'old_events')
+		self.OLDEVENT_FILENAME = 'old_events.txt'
+		self.OLDEVENT_FILE = os.path.join(self.OLDEVENT_DIR, self.OLDEVENT_FILENAME)
+
+		if reset_tracking:
+			try:
+				os.remove(self.OLDEVENT_FILE)
+				print(f'reset event primary keys tracking - deleted {self.OLDEVENT_FILE}..')
+			except:
+				pass
+
+		self.JSON_DIR = os.path.join(os.path.curdir, 'features')
+		self.JSON_FILENAME = 'features.json'
+		self.JSON_FILE = os.path.join(self.JSON_DIR, self.JSON_FILENAME)
+
+		self.REQ_DIRS = [self.NEWEVENT_DIR, self.OLDEVENT_DIR, self.JSON_DIR]	
+
+		for d in self.REQ_DIRS:
+			if not os.path.exists(d):
+				os.mkdir(d)
 
 		self.spell_checker = enchant.Dict("en_US")
 
@@ -147,9 +177,9 @@ class EventFeatureFactory(ArtistNameNormaliser):
 
 		# geo
 
-		self.GEO_DIR = 'geo'
+		self.GEO_DIR = os.path.join(self.DATA_DIR, 'geo')
 
-		self._state_abb, self._countries, self._suburbs = [json.load(open(os.path.join(self.DATA_DIR, self.GEO_DIR, f + '.json'))) 
+		self._state_abb, self._countries, self._suburbs = [json.load(open(os.path.join(self.GEO_DIR, f + '.json'))) 
 			for f in ['state-abbreviations', 'countries', 'suburbs']]
 
 		# abbreviations
@@ -247,6 +277,136 @@ class EventFeatureFactory(ArtistNameNormaliser):
 					 'psychics': self._psychics,
 					 'circuses': self._circuses,
 					 'motivational_speakers': self._motivational_speakers}
+
+	def start_session(self, rds_creds_):
+
+		print('starting sqlalchemy session...', end='')
+
+		sql_keys_required = set('user user_pwd server port db_name'.split())
+
+		sql_creds = json.load(open(rds_creds_))
+
+		if sql_keys_required != set(sql_creds):
+			raise KeyError(f'RDS SQL Credentials are incomplete! The following keys are missing: '
+				f'{", ".join([k for k in sql_keys_required - set(sql_creds)])}')
+
+		self._ENGINE = sqlalchemy.create_engine(f'mssql+pymssql://{sql_creds["user"]}:{sql_creds["user_pwd"]}'
+													f'@{sql_creds["server"]}:{sql_creds["port"]}/{sql_creds["db_name"]}')
+		self._SESSION = sessionmaker(autocommit=True, bind=self._ENGINE)
+
+		self.sess = self._SESSION()
+
+		print('ok')
+		
+		return self
+
+	def close_session(self):
+
+		self.sess.close()
+
+		print('closed sqlalchemy session...')
+
+		return self
+
+
+	def exists(self, tab):
+		"""
+		check if a table tab exists; return 1 if it does or 0 otherwise
+		"""
+		return self.sess.execute(f""" IF OBJECT_ID(N'{tab}', N'U') IS NOT NULL
+											SELECT 1
+										ELSE
+											SELECT 0
+										  """).fetchone()[0]
+
+	def count_rows(self, tab):
+		"""
+		count how many rows in table tab
+		"""
+		return self.sess.execute(f'SELECT COUNT (*) FROM {tab};').fetchone()[0]
+
+	def get_column(self, table_, column_, type_=None, distinct_=None):
+		"""
+		grab a single column COLUMN_ from table TABLE_ as type TYPE_ (pick DISTINCT_=True for distinct values)
+
+		type_ can be one of the following: 
+		
+			bigint, int, smallint, tinyint, bit, decimal, numeric, money, smallmoney, 
+			float, real, datetime, smalldatetime, char, varchar, text, nchar, nvarchar, 
+			ntext, binary, varbinary, or image
+
+		"""
+		cast_part = f'CAST ({column_} as {type_})' if type_ else column_
+
+		return {_[0] for _ in self.sess.execute(f'SELECT {"DISTINCT" if distinct_ else ""} {cast_part} FROM {table_};').fetchall()}
+				
+	def find_new_events(self):
+		"""
+		check which pks currently in the event table are new, i.e. not on the list of old pks yet and return them 
+		"""
+		current_pks = self.get_column(table_=self.EVENT_TBL, column_='pk_event_dim', type_='nvarchar', distinct_=True) 
+
+		try: 
+			old_event_pks = {l.strip() for l in open(self.OLDEVENT_FILE).readlines() if l.strip()}
+		except:
+			old_event_pks = set()
+
+		self.NEW_EVENT_PKS = current_pks - old_event_pks
+
+		print(f'found {len(self.NEW_EVENT_PKS):,} new events...')
+
+		return self
+
+
+	def get_events(self):
+		"""
+		download relevant columns for the events with primary keys that we are interested in
+		"""
+
+		if not self.NEW_EVENT_PKS:
+			print('no new events today...')
+			return self
+
+		pks_ = """pk_event_dim primary_show_desc performance_time title_who title_where title_when
+					title1 title2 title3 title4 title5 title6""".split()
+
+		if not self.exists(self.EVENT_TBL):
+			raise Exception(f'table {self.EVENT_TBL} doesn\'t exist!')
+		else:
+			print(f'table {self.EVENT_TBL} exists...')	
+
+		# https://docs.microsoft.com/en-us/sql/sql-server/maximum-capacity-specifications-for-sql-server
+
+		if len(self.NEW_EVENT_PKS) < 10000:
+
+			self.events_ = pd.read_sql(f"""
+								SELECT {','.join(pks_)}
+								FROM {self.EVENT_TBL} WHERE pk_event_dim in ({', '.join(self.NEW_EVENT_PKS)});				
+								""", self._ENGINE)
+		else:
+
+			self.events_ = pd.read_sql(f"""
+								SELECT {','.join(pks_)}
+								FROM {self.EVENT_TBL};				
+								""", self._ENGINE).query(f"pk_event_dim in ({', '.join(self.NEW_EVENT_PKS)})")
+
+		print(f'collected {len(self.events_):,} rows')
+
+		return self
+
+	def save(self, tofile=None):
+
+		if not tofile:
+			file_ = f'events_{arrow.utcnow().to("Australia/Sydney").format("YYYYMMDD")}.csv.gz'
+		else:
+			file_ = tofile
+
+		self.events_.to_csv(self.NEWEVENT_DIR + '/' + file_, sep='\t', index=False, compression='gzip')
+
+		print(f'saved to a tab-separated file {file_} in {self.NEWEVENT_DIR}')
+
+		return self
+		
 
 	def _deabbreviate(self, st):
 		"""
@@ -413,37 +573,72 @@ class EventFeatureFactory(ArtistNameNormaliser):
 					labels_.update({what: fnd_})
 
 		return labels_
-				
 
+	def get_features(self):
+
+		# column names to be parts of description
+		descr_cols = list(self.events_.columns[1:])
+		
+		pks_processed = []
+
+		evs_processed = []
+
+		for i, event in enumerate(self.events_.iloc[:1000].iterrows(),1):
+
+			e = Event(event_id=event[1]['pk_event_dim'],
+					description= ' ' .join([str(event[1][c]) for c in descr_cols]))
+
+			e._labels = self.get_labels(e.description)
+
+			e.get_type()
+			e.show()
+			
+			pks_processed.append(event[1]['pk_event_dim'])
+			evs_processed.append(e.to_json())
+		
+		with open(self.OLDEVENT_FILENAME, 'a') as f:
+			for k in pks_processed:
+				f.write(f'{k}\n')
+
+		try:
+			evs_processed = {**evs_processed, **json.load(open(self.JSON_FILE))}
+		except:
+			pass
+
+		json.dump(evs_processed, open(self.JSON_FILE,'w'))
+
+		print(f'done. produced features for {len(pks_processed)} new event primary keys...')
 
 if __name__ == '__main__':
 
-	t = EventTableGetter().start_session('creds/rds.txt').find_new_events().get_events()
+	t_st = time.time()
 
-	t.close_session()
+	eff = EventFeatureFactory(reset_tracking=True) \
+			.start_session('creds/rds.txt') \
+			.find_new_events() \
+			.get_events() \
+			.close_session() \
+			.save()	\
+			.get_features()
 
-	t.save()	
+	print('elapsed time: {:.0f} min {:.0f} sec'.format(*divmod(time.time() - t_st, 60)))
 
-	descr_cols = list(t.events_.columns[1:])
-
-	eff = EventFeatureFactory()
-
-	pks_processed = []
-
-	for i, event in enumerate(t.events_.iloc[:100].iterrows(),1):
-
-		e = Event(event_id=event[1]['pk_event_dim'],
-					description= ' ' .join([str(event[1][c]) for c in descr_cols]))
 	
-		e._labels = eff.get_labels(e.description)
 
-		e.get_type()
+	
 
-		e.show()
+	
+	
+	
+	
 
-		pks_processed.append(event[1]['pk_event_dim'])
+	
 
-	with open(f'{t.OLDEVENT_DIR}/{t.OLDEVENT_FILE}', 'a') as f:
-		for k in pks_processed:
-			f.write(f'{k}\n')
+	
+
+	
+
+	
+	
+	
 
