@@ -185,11 +185,11 @@ class EventFeatureFactory(ArtistNameNormaliser):
 
 		# sports
 
-		self.SPORTS_DIR = 'sports'
+		self.SPORTS_DIR = os.path.join(self.DATA_DIR,'sports')
 
 		self._teams, self._sport_names, self._tournaments, \
 			self._tournament_types, self._sponsors, self._sport_venues = \
-				[json.load(open(os.path.join(self.DATA_DIR, self.SPORTS_DIR, f + '.json'))) 
+				[json.load(open(os.path.join(self.SPORTS_DIR, f + '.json'))) 
 			for f in ['teams', 
 						'sport-names', 
 							'tournaments',
@@ -201,68 +201,68 @@ class EventFeatureFactory(ArtistNameNormaliser):
 
 		# music
 
-		self.MUSIC_DIR = 'music'
+		self.MUSIC_DIR = os.path.join(self.DATA_DIR, 'music')
 
-		self._promoters = json.load(open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'data_promoters.json')))
-		self._music_venues = json.load(open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'data_music-venues.json')))
+		self._promoters = json.load(open(os.path.join(self.MUSIC_DIR, 'data_promoters.json')))
+		self._music_venues = json.load(open(os.path.join(self.MUSIC_DIR, 'data_music-venues.json')))
 
-		self._artists = json.load(open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'data_artists.json')))
-		self._major_music_genres = json.load(open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'data_major-music-genres.json')))
+		self._artists = json.load(open(os.path.join(self.MUSIC_DIR, 'data_artists.json')))
+		self._major_music_genres = json.load(open(os.path.join(self.MUSIC_DIR, 'data_major-music-genres.json')))
 
-		self._dead_bands = json.load(open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'dead_bands.json')))
+		self._dead_bands = json.load(open(os.path.join(self.MUSIC_DIR, 'dead_bands.json')))
 
-		self._award_winners = [self.normalize(a) for a in json.load(open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'award_winners.json')))]
+		self._award_winners = [self.normalize(a) for a in json.load(open(os.path.join(self.MUSIC_DIR, 'award_winners.json')))]
 
-		self._artists_popular = self._normalize_dict(json.load(open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'top_artists.json'))))
+		self._artists_popular = self._normalize_dict(json.load(open(os.path.join(self.MUSIC_DIR, 'top_artists.json'))))
 
-		self._aus_gig_artists = {self.normalize(a) for a in open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'aus_gig_artists.txt')).readlines() if a.strip()}
+		self._aus_gig_artists = self._normalize_dict(json.load(open(os.path.join(self.MUSIC_DIR, 'aus_gig_artists.json'))))
 
 		# musicals
 
-		self.MUSICAL_DIR = 'musical'
+		self.MUSICAL_DIR = os.path.join(self.DATA_DIR, 'musical')
 
-		self._musicals = json.load(open(os.path.join(self.DATA_DIR, self.MUSICAL_DIR, 'musicals.json')))
+		self._musicals = json.load(open(os.path.join(self.MUSICAL_DIR, 'musicals.json')))
 
 		# opera
 
-		self.OPERA_DIR = 'opera'
+		self.OPERA_DIR = os.path.join(self.DATA_DIR, 'opera')
 
-		self._opera_singers = json.load(open(os.path.join(self.DATA_DIR, self.OPERA_DIR, 'singers.json')))
+		self._opera_singers = json.load(open(os.path.join(self.OPERA_DIR, 'singers.json')))
 
 		# comedy
 
-		self.COMEDY_DIR = 'comedy'
+		self.COMEDY_DIR = os.path.join(self.DATA_DIR, 'comedy')
 
-		self._comedians = json.load(open(os.path.join(self.DATA_DIR, self.COMEDY_DIR, 'comedians.json')))
+		self._comedians = json.load(open(os.path.join(self.COMEDY_DIR, 'comedians.json')))
 
 		# circus
 
-		self.CIRCUS_DIR = 'circus'
+		self.CIRCUS_DIR = os.path.join(self.DATA_DIR, 'circus')
 
-		self._circuses = json.load(open(os.path.join(self.DATA_DIR, self.CIRCUS_DIR, 'circus.json')))
+		self._circuses = json.load(open(os.path.join(self.CIRCUS_DIR, 'circus.json')))
 
 		# special interests
 
-		self.SPECIAL_DIR = 'special'
+		self.SPECIAL_DIR = os.path.join(self.DATA_DIR, 'special')
 
-		self._life_coaches, self._boxers, self._psychics, self._motivational_speakers = [json.load(open(os.path.join(self.DATA_DIR, self.SPECIAL_DIR, f + '.json'))) 
+		self._life_coaches, self._boxers, self._psychics, self._motivational_speakers = [json.load(open(os.path.join(self.SPECIAL_DIR, f + '.json'))) 
 												for f in ['life_coaches', 'boxers', 'psychics', 'motivational_speakers']]
 
-		self.COMPANY_DIR = 'companies'
+		self.COMPANY_DIR = os.path.join(self.DATA_DIR, 'companies')
 
-		self._companies = json.load(open(os.path.join(self.DATA_DIR, self.COMPANY_DIR, 'companies.json')))
+		self._companies = json.load(open(os.path.join(self.COMPANY_DIR, 'companies.json')))
 
-		self.MOVIE_DIR = 'movie'
+		self.MOVIE_DIR = os.path.join(self.DATA_DIR, 'movie')
 
-		self._movies = json.load(open(os.path.join(self.DATA_DIR, self.MOVIE_DIR, 'movies.json')))
+		self._movies = json.load(open(os.path.join(self.MOVIE_DIR, 'movies.json')))
 
-		self.FESTIVAL_DIR = 'festivals'
+		self.FESTIVAL_DIR = os.path.join(self.DATA_DIR, 'festivals')
 
-		self._festivals = self._normalize_dict(json.load(open(os.path.join(self.DATA_DIR, self.FESTIVAL_DIR, 'festivals.json'))))
+		self._festivals = self._normalize_dict(json.load(open(os.path.join(self.FESTIVAL_DIR, 'festivals.json'))))
 
-		self.MISC_DIR = 'misc'
-		self._purchase_types = json.load(open(os.path.join(self.DATA_DIR, self.MISC_DIR, 'data_purchase-types.json')))
-		self._venue_types = json.load(open(os.path.join(self.DATA_DIR, self.MISC_DIR, 'data_venue-types.json')))
+		self.MISC_DIR = os.path.join(self.DATA_DIR, 'misc')
+		self._purchase_types = json.load(open(os.path.join(self.MISC_DIR, 'data_purchase-types.json')))
+		self._venue_types = json.load(open(os.path.join(self.MISC_DIR, 'data_venue-types.json')))
 
 		self._NES = {'suburbs': self._suburbs, 
 					 'musicals': self._musicals, 
@@ -510,9 +510,9 @@ class EventFeatureFactory(ArtistNameNormaliser):
 		criteria = {'words_in_name': lambda x: bonuses['words_in_name']*(len(x.split()) - 1),
 					'uncommon_words_in_name': lambda x: bonuses['uncommon_words_in_name']*(1 - sum([(self.spell_checker.check(x) or self.spell_checker.check(x.title())) 
 															for w in x.split()])/len(x.split())),
-					'popularity': lambda x: bonuses['popularity'] if x in self._artists_popular[x[0]] else 0,
+					'popularity': lambda x: bonuses['popularity'] if x in self._artists_popular.get(x[0], []) else 0,
 					'award_winner': lambda x: bonuses['award_winner'] if x in self._award_winners else 0,
-					'performed_in_australia': lambda x: bonuses['performed_in_australia'] if x in self._aus_gig_artists else 0,
+					'performed_in_australia': lambda x: bonuses['performed_in_australia'] if x in self._aus_gig_artists.get(x[0], []) else 0,
 					'possibly_dead': lambda x: bonuses['possibly_dead'] if x in self._dead_bands[x[0]] else 0}
 
 		scores_ = [a._replace(score=sum([a.words_in_name, a.uncommon_words_in_name, a.popularity, a.performed_in_australia,
