@@ -201,21 +201,21 @@ class EventFeatureFactory(ArtistNameNormaliser):
 
 		# music
 
-		self._promoters = json.load(open(os.path.join(self.DATA_DIR, 'data_promoters.json')))
-		self._music_venues = json.load(open(os.path.join(self.DATA_DIR, 'data_music-venues.json')))
+		self.MUSIC_DIR = 'music'
 
-		self._artists = json.load(open(os.path.join(self.DATA_DIR, 'data_artists.json')))
-		self._major_music_genres = json.load(open(os.path.join(self.DATA_DIR, 'data_major-music-genres.json')))
+		self._promoters = json.load(open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'data_promoters.json')))
+		self._music_venues = json.load(open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'data_music-venues.json')))
 
-		self._dead_bands = json.load(open(os.path.join(self.DATA_DIR, 'dead_bands.json')))
+		self._artists = json.load(open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'data_artists.json')))
+		self._major_music_genres = json.load(open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'data_major-music-genres.json')))
 
-		self._award_winners = [self.normalize(a) for a in json.load(open(os.path.join(self.DATA_DIR, 'award_winners.json')))]
+		self._dead_bands = json.load(open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'dead_bands.json')))
 
-		self._artists_popular = {self.normalize(a) for a in open(os.path.join(self.DATA_DIR, 'top_artists.txt')).readlines() if a.strip()}
+		self._award_winners = [self.normalize(a) for a in json.load(open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'award_winners.json')))]
 
-		self._aus_gig_artists = {self.normalize(a) for a in open(os.path.join(self.DATA_DIR, 'aus_gig_artists.txt')).readlines() if a.strip()}
+		self._artists_popular = self._normalize_dict(json.load(open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'top_artists.json'))))
 
-		self._venue_types = json.load(open(os.path.join(self.DATA_DIR, 'data_venue-types.json')))
+		self._aus_gig_artists = {self.normalize(a) for a in open(os.path.join(self.DATA_DIR, self.MUSIC_DIR, 'aus_gig_artists.txt')).readlines() if a.strip()}
 
 		# musicals
 
@@ -256,11 +256,13 @@ class EventFeatureFactory(ArtistNameNormaliser):
 
 		self._movies = json.load(open(os.path.join(self.DATA_DIR, self.MOVIE_DIR, 'movies.json')))
 
-		self._festivals = json.load(open(os.path.join(self.DATA_DIR, 'data_festivals.json')))
-		
-		self._purchase_types = json.load(open(os.path.join(self.DATA_DIR, 'data_purchase-types.json')))
+		self.FESTIVAL_DIR = 'festivals'
 
-		
+		self._festivals = self._normalize_dict(json.load(open(os.path.join(self.DATA_DIR, self.FESTIVAL_DIR, 'festivals.json'))))
+
+		self.MISC_DIR = 'misc'
+		self._purchase_types = json.load(open(os.path.join(self.DATA_DIR, self.MISC_DIR, 'data_purchase-types.json')))
+		self._venue_types = json.load(open(os.path.join(self.DATA_DIR, self.MISC_DIR, 'data_venue-types.json')))
 
 		self._NES = {'suburbs': self._suburbs, 
 					 'musicals': self._musicals, 
@@ -278,7 +280,7 @@ class EventFeatureFactory(ArtistNameNormaliser):
 					 'music_venues': self._music_venues,
 					 'festivals': self._festivals,
 					 'tournament_types': self._tournament_types,
-					 'tournaments': self._tournament_types, 
+					 'tournaments': self._tournaments, 
 					 'sponsors': self._sponsors,
 					 'purchase_types': self._purchase_types, 
 					 'comedians': self._comedians,
@@ -287,6 +289,17 @@ class EventFeatureFactory(ArtistNameNormaliser):
 					 'psychics': self._psychics,
 					 'circuses': self._circuses,
 					 'motivational_speakers': self._motivational_speakers}
+
+	def _normalize_dict(self, dict_):
+		"""
+		return a dictionary indexed by first letter with all entries normalized
+		"""
+		ndict_ = defaultdict(list)
+
+		for _ in {self.normalize(f) for l in dict_ for f in dict_[l]}:
+			ndict_[_[0]].append(_)
+
+		return ndict_
 
 	def start_session(self, rds_creds_):
 
@@ -497,7 +510,7 @@ class EventFeatureFactory(ArtistNameNormaliser):
 		criteria = {'words_in_name': lambda x: bonuses['words_in_name']*(len(x.split()) - 1),
 					'uncommon_words_in_name': lambda x: bonuses['uncommon_words_in_name']*(1 - sum([(self.spell_checker.check(x) or self.spell_checker.check(x.title())) 
 															for w in x.split()])/len(x.split())),
-					'popularity': lambda x: bonuses['popularity'] if x in self._artists_popular else 0,
+					'popularity': lambda x: bonuses['popularity'] if x in self._artists_popular[x[0]] else 0,
 					'award_winner': lambda x: bonuses['award_winner'] if x in self._award_winners else 0,
 					'performed_in_australia': lambda x: bonuses['performed_in_australia'] if x in self._aus_gig_artists else 0,
 					'possibly_dead': lambda x: bonuses['possibly_dead'] if x in self._dead_bands[x[0]] else 0}
