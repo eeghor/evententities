@@ -196,6 +196,9 @@ class EventFeatureFactory(ArtistNameNormaliser):
 								'tournament-types',
 									'sponsors',
 										'sport-venues']]
+
+		self._team_names_only = {self.normalize(n) for l in self._teams for n in self._teams[l]}
+
 		# music
 
 		self._promoters = json.load(open(os.path.join(self.DATA_DIR, 'data_promoters.json')))
@@ -522,27 +525,22 @@ class EventFeatureFactory(ArtistNameNormaliser):
 	def find_teams(self, cands, s, m=None):
 		"""
 		find what teams are mentioned in event description s; only up to 2 teams can be returned!
-		if need more, lift restrictions below
+		if need more, lift restrictions;
+
+		note: RECURSION!
 		"""
 
 		max_words_in_team = len(max(cands, key=lambda _: len(_.split())).split())
-		print('max_words_in_team=', max_words_in_team)
 		words_in_string = len(s.split()) 
-		print('words_in_string=', words_in_string)
-
-		print('len(cands)=', len(cands))
 
 		# set to store matched teams
 		if not m:
 			m = set()
 
-		# stoppage conditions - pay attention because this method is called recursively
 		if (len(m) > 1) or (not max_words_in_team) or (not words_in_string) or (max_words_in_team > words_in_string):
 			return m
 
 		its = itertools.tee(iter(s.split()), max_words_in_team)
-
-		print('its=', its)
 
 		# move some iterators ahead
 		for i, _ in enumerate(range(max_words_in_team)):
@@ -555,8 +553,6 @@ class EventFeatureFactory(ArtistNameNormaliser):
 		for p in zip(*its):
 			possible_matches.add(' '.join(p))
 
-		print('possible_matches=',possible_matches)
-
 		cands_to_remove = set()
 		pms_to_remove = set()
 		
@@ -568,9 +564,7 @@ class EventFeatureFactory(ArtistNameNormaliser):
 				if not lev:
 
 					if team in possible_matches:
-						print('found ', team)
 						m.add(team)
-						print('now m=', m)
 						
 						if len(m) > 1:
 							return m
@@ -585,25 +579,19 @@ class EventFeatureFactory(ArtistNameNormaliser):
 					for pm in possible_matches:
 
 						if jellyfish.levenshtein_distance(team,pm) == lev:
-							print('found ', team)
 							m.add(team)
-							print('m=',m)
 							
 							if len(m) > 1:
-								print('returning m!')
 								return m
 
-							print('seting candidates to remove..')
 							cands_to_remove.add(team)
 							pms_to_remove.add(pm)
 
 			# remove detected candidates from list of candidates
 			# and do same for possible matches
-			print('updating candidates...')
 			cands = cands - cands_to_remove
 			possible_matches = possible_matches - pms_to_remove
 
-		print('special case...')
 		# cover the case when some teams have long names and hence are often mentioned by a shortened name
 		if max_words_in_team > 1: 
 																
@@ -612,7 +600,9 @@ class EventFeatureFactory(ArtistNameNormaliser):
 			for c in cands:
 
 				if len(c.split()) == max_words_in_team:
+
 					if max_words_in_team == 2:
+
 						for v in c.split():
 							if not self.spell_checker.check(v):
 								new_cands.add(v)
@@ -625,13 +615,7 @@ class EventFeatureFactory(ArtistNameNormaliser):
 			
 			cands = {c for c in cands if not len(c.split()) == max_words_in_team} | new_cands
 
-			print('calling find_teams again with')
-			print('len(cands)=', len(cands))
-			print('s=', s)
-			print('len(m)=', len(m))
 			m.update(self.find_teams(cands, s, m))
-
-		print('end of method returning m=', m)
 		
 		return m if m else None
 
@@ -665,25 +649,36 @@ class EventFeatureFactory(ArtistNameNormaliser):
 		descr_cols = list(self.events_.columns[1:])
 		
 		pks_processed = []
-
 		evs_processed = []
+		faulty_rows = set()
 
-		for i, event in enumerate(self.events_.iloc[:1000].iterrows(),1):
+		for i, event in enumerate(self.events_.iloc[:10000].iterrows(),1):
 
-			e = Event(event_id=event[1]['pk_event_dim'],
-					description= ' ' .join([str(event[1][c]) for c in descr_cols]))
+			pk_ = event[1]['pk_event_dim']
+			ds_ = ' '.join([str(event[1][c]) for c in descr_cols]).strip()
 
-			e._labels = self.get_labels(e.description)
+			if len(ds_) > 2:
 
-			e.get_type()
-			e.show()
+				e = Event(event_id=pk_, description=ds_)
 
-			if e._labels.get('sport_venues', None) and len(e._labels.get('teams', []) < 2):
-				e._labels['teams'] = self.find_teams({t for l in self._teams for t in self._teams[l]}, e.description)
+				e._labels = self.get_labels(e.description)
+
+				e.get_type()
+
+				if e._labels.get('sport_venues', None) and (len(e._labels.get('teams', [])) < 2):
+					e._labels['teams'] = self.find_teams(self._team_names_only, e.description)
 
 			
-			pks_processed.append(event[1]['pk_event_dim'])
-			evs_processed.append(e.to_json())
+				pks_processed.append(event[1]['pk_event_dim'])
+				evs_processed.append(e.to_json())
+
+			else:
+
+				faulty_rows.add(event[1])
+
+			if i%100 == 0:
+				e.show()
+				print('faulty rows:', faulty_rows)
 		
 		with open(self.OLDEVENT_FILE, 'a') as f:
 			for k in pks_processed:
@@ -702,19 +697,13 @@ if __name__ == '__main__':
 
 	t_st = time.time()
 
-	eff = EventFeatureFactory(reset_tracking=True)
-
-	tms = {t for l in eff._teams for t in eff._teams[l]}
-
-	print(eff.find_teams(tms, '233/544/1 __DSxfskjn Al Ahly vs  Sydny fc ANZ stadium shandong luneng'.lower()))
-
-	# eff = EventFeatureFactory(reset_tracking=True) \
-	# 		.start_session('creds/rds.txt') \
-	# 		.find_new_events() \
-	# 		.get_events() \
-	# 		.close_session() \
-	# 		.save()	\
-	# 		.get_features()
+	eff = EventFeatureFactory(reset_tracking=True) \
+			.start_session('creds/rds.txt') \
+			.find_new_events() \
+			.get_events() \
+			.close_session() \
+			.save()	\
+			.get_features()
 
 	print('elapsed time: {:.0f} min {:.0f} sec'.format(*divmod(time.time() - t_st, 60)))
 	

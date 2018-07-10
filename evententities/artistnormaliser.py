@@ -81,7 +81,7 @@ class BaseNormaliser:
 				 'mt': 'mount',
 				 'utd': 'united',
 				 'cty': 'city',
-				 'fc': 'football club',
+				 'football club': 'fc',
 				 'snr': 'senior',
 				 'jr': 'junion',
 				 'nsw': 'new south wales' ,
@@ -94,6 +94,8 @@ class BaseNormaliser:
 				 'qld': 'queensland',
 				 'champs': 'championships', 
 				 'champ': 'championship', 
+				 'soc': 'society',
+				 'ent': 'entertainment',
 				 'intl': 'international', 
 				 'int': 'international', 
 				 'aust': 'australian'}
