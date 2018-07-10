@@ -14,6 +14,8 @@ import time
 import sqlalchemy
 from sqlalchemy.orm.session import sessionmaker
 
+import jellyfish
+import itertools
 
 class Artist(NamedTuple):
 
@@ -178,26 +180,22 @@ class EventFeatureFactory(ArtistNameNormaliser):
 
 		self.GEO_DIR = os.path.join(self.DATA_DIR, 'geo')
 
-		self._state_abb, self._countries, self._suburbs = [json.load(open(os.path.join(self.GEO_DIR, f + '.json'))) 
-			for f in ['state-abbreviations', 'countries', 'suburbs']]
+		self._countries, self._suburbs = [json.load(open(os.path.join(self.GEO_DIR, f + '.json'))) 
+			for f in ['countries', 'suburbs']]
 
-		# abbreviations
-		self._abb = [json.load(open(os.path.join(self.DATA_DIR, f))) 
-			for f in ['data_abbreviations.json']]
 		# sports
 
 		self.SPORTS_DIR = 'sports'
 
 		self._teams, self._sport_names, self._tournaments, \
-			self._tournament_types, self._sponsors, self._sport_venues, self._sport_abb = \
+			self._tournament_types, self._sponsors, self._sport_venues = \
 				[json.load(open(os.path.join(self.DATA_DIR, self.SPORTS_DIR, f + '.json'))) 
 			for f in ['teams', 
 						'sport-names', 
 							'tournaments',
 								'tournament-types',
 									'sponsors',
-										'sport-venues',
-											'sport-abbrs']]
+										'sport-venues']]
 		# music
 
 		self._promoters = json.load(open(os.path.join(self.DATA_DIR, 'data_promoters.json')))
@@ -214,8 +212,13 @@ class EventFeatureFactory(ArtistNameNormaliser):
 
 		self._aus_gig_artists = {self.normalize(a) for a in open(os.path.join(self.DATA_DIR, 'aus_gig_artists.txt')).readlines() if a.strip()}
 
-		self._musicals = json.load(open(os.path.join(self.DATA_DIR, 'data_musicals.json')))
 		self._venue_types = json.load(open(os.path.join(self.DATA_DIR, 'data_venue-types.json')))
+
+		# musicals
+
+		self.MUSICAL_DIR = 'musical'
+
+		self._musicals = json.load(open(os.path.join(self.DATA_DIR, self.MUSICAL_DIR, 'musicals.json')))
 
 		# opera
 
@@ -242,9 +245,13 @@ class EventFeatureFactory(ArtistNameNormaliser):
 		self._life_coaches, self._boxers, self._psychics, self._motivational_speakers = [json.load(open(os.path.join(self.DATA_DIR, self.SPECIAL_DIR, f + '.json'))) 
 												for f in ['life_coaches', 'boxers', 'psychics', 'motivational_speakers']]
 
-		self._companies = json.load(open(os.path.join(self.DATA_DIR, 'data_companies.json')))
+		self.COMPANY_DIR = 'companies'
 
-		self._movies = json.load(open(os.path.join(self.DATA_DIR, 'data_movies.json')))
+		self._companies = json.load(open(os.path.join(self.DATA_DIR, self.COMPANY_DIR, 'companies.json')))
+
+		self.MOVIE_DIR = 'movie'
+
+		self._movies = json.load(open(os.path.join(self.DATA_DIR, self.MOVIE_DIR, 'movies.json')))
 
 		self._festivals = json.load(open(os.path.join(self.DATA_DIR, 'data_festivals.json')))
 		
@@ -259,6 +266,7 @@ class EventFeatureFactory(ArtistNameNormaliser):
 					 'promoters': self._promoters, 
 					 'opera_singers': self._opera_singers,
 					 'countries': self._countries, 
+					 'companies': self._companies,
 					 'teams': self._teams,
 					 'sport_names': self._sport_names, 
 					 'venue_types': self._venue_types,
@@ -405,46 +413,6 @@ class EventFeatureFactory(ArtistNameNormaliser):
 		print(f'saved to a tab-separated file {file_} in {self.NEWEVENT_DIR}')
 
 		return self
-		
-
-	def _deabbreviate(self, st):
-		"""
-		unfold abbreviations in string st
-		"""
-		_st = st
-		# first replace full state names by abbreviations;
-		for s in self._state_abb:
-			_st = _st.replace(s, self._state_abb[s])
-		# other dictionaries map single-word abbreviations so we can just do split
-		return ' '.join([self._abb.get(self._sport_abb.get(_, _),_) for _ in _st.strip().split()])
-
-	def _normalize(self, st):
-		"""
-		normalize string st
-		"""
-		# firstly, lower case, replace separators with white spaces, remove all non-alphanumeric 
-		# and single white space between words - this applies to all
-
-		if not st:
-			return None
-
-		_st = st
-		_st = _st.lower()
-		_st = _st.replace('-',' ').replace('_',' ').replace(".",' ').replace('/',' ').replace('&', 'and')
-
-		_st = ''.join([w for w in _st if w.isalnum() or w.isspace()])
-
-		if not _st:
-			return None
-
-		_st = ' '.join(_st.split())
-
-		# remove 'a', 'the', 'and', '&'
-		_st = ' '.join([w for w in _st.split() if w not in ['the', 'a', 'an']])
-
-		_st = self._deabbreviate(_st)
-
-		return _st if _st else None
 
 	def find_matches(self, st, items):
 		"""
@@ -551,6 +519,123 @@ class EventFeatureFactory(ArtistNameNormaliser):
 
 		return list_out if list_out else None
 
+	def find_teams(self, cands, s, m=None):
+		"""
+		find what teams are mentioned in event description s; only up to 2 teams can be returned!
+		if need more, lift restrictions below
+		"""
+
+		max_words_in_team = len(max(cands, key=lambda _: len(_.split())).split())
+		print('max_words_in_team=', max_words_in_team)
+		words_in_string = len(s.split()) 
+		print('words_in_string=', words_in_string)
+
+		print('len(cands)=', len(cands))
+
+		# set to store matched teams
+		if not m:
+			m = set()
+
+		# stoppage conditions - pay attention because this method is called recursively
+		if (len(m) > 1) or (not max_words_in_team) or (not words_in_string) or (max_words_in_team > words_in_string):
+			return m
+
+		its = itertools.tee(iter(s.split()), max_words_in_team)
+
+		print('its=', its)
+
+		# move some iterators ahead
+		for i, _ in enumerate(range(max_words_in_team)):
+			if i > 0:
+				for x in range(i):
+					next(its[i], None)  # i moves ahead by i - 1
+		
+		possible_matches = set()
+																
+		for p in zip(*its):
+			possible_matches.add(' '.join(p))
+
+		print('possible_matches=',possible_matches)
+
+		cands_to_remove = set()
+		pms_to_remove = set()
+		
+		# vary levenshtein distance from 0 (exact match) to 2 
+		for lev in range(3):
+
+			for team in cands:
+
+				if not lev:
+
+					if team in possible_matches:
+						print('found ', team)
+						m.add(team)
+						print('now m=', m)
+						
+						if len(m) > 1:
+							return m
+						
+						cands_to_remove.add(team)
+						pms_to_remove.add(team)
+						
+						# remove matched team from description
+						s = ' '.join(s.replace(team, ' ').split())
+				else:
+
+					for pm in possible_matches:
+
+						if jellyfish.levenshtein_distance(team,pm) == lev:
+							print('found ', team)
+							m.add(team)
+							print('m=',m)
+							
+							if len(m) > 1:
+								print('returning m!')
+								return m
+
+							print('seting candidates to remove..')
+							cands_to_remove.add(team)
+							pms_to_remove.add(pm)
+
+			# remove detected candidates from list of candidates
+			# and do same for possible matches
+			print('updating candidates...')
+			cands = cands - cands_to_remove
+			possible_matches = possible_matches - pms_to_remove
+
+		print('special case...')
+		# cover the case when some teams have long names and hence are often mentioned by a shortened name
+		if max_words_in_team > 1: 
+																
+			new_cands = set()
+																
+			for c in cands:
+
+				if len(c.split()) == max_words_in_team:
+					if max_words_in_team == 2:
+						for v in c.split():
+							if not self.spell_checker.check(v):
+								new_cands.add(v)
+					else:
+
+						for cm in itertools.combinations(c.split(), max_words_in_team - 1):
+							new_cands.add(' '.join(cm))
+						if max_words_in_team > 2:
+							new_cands.add(''.join([x[0] for x in c.split()]))
+			
+			cands = {c for c in cands if not len(c.split()) == max_words_in_team} | new_cands
+
+			print('calling find_teams again with')
+			print('len(cands)=', len(cands))
+			print('s=', s)
+			print('len(m)=', len(m))
+			m.update(self.find_teams(cands, s, m))
+
+		print('end of method returning m=', m)
+		
+		return m if m else None
+
+
 	def get_labels(self, s):
 		"""
 		extract all labels from description s
@@ -568,6 +653,7 @@ class EventFeatureFactory(ArtistNameNormaliser):
 					fnd_ = self.rank_artists(fnd_)
 				elif what == 'countries':
 					fnd_ = self.rank_countries(fnd_)
+
 				if fnd_:
 					labels_.update({what: fnd_})
 
@@ -591,6 +677,10 @@ class EventFeatureFactory(ArtistNameNormaliser):
 
 			e.get_type()
 			e.show()
+
+			if e._labels.get('sport_venues', None) and len(e._labels.get('teams', []) < 2):
+				e._labels['teams'] = self.find_teams({t for l in self._teams for t in self._teams[l]}, e.description)
+
 			
 			pks_processed.append(event[1]['pk_event_dim'])
 			evs_processed.append(e.to_json())
@@ -612,18 +702,21 @@ if __name__ == '__main__':
 
 	t_st = time.time()
 
-	eff = EventFeatureFactory(reset_tracking=True) \
-			.start_session('creds/rds.txt') \
-			.find_new_events() \
-			.get_events() \
-			.close_session() \
-			.save()	\
-			.get_features()
+	eff = EventFeatureFactory(reset_tracking=True)
+
+	tms = {t for l in eff._teams for t in eff._teams[l]}
+
+	print(eff.find_teams(tms, '233/544/1 __DSxfskjn Al Ahly vs  Sydny fc ANZ stadium shandong luneng'.lower()))
+
+	# eff = EventFeatureFactory(reset_tracking=True) \
+	# 		.start_session('creds/rds.txt') \
+	# 		.find_new_events() \
+	# 		.get_events() \
+	# 		.close_session() \
+	# 		.save()	\
+	# 		.get_features()
 
 	print('elapsed time: {:.0f} min {:.0f} sec'.format(*divmod(time.time() - t_st, 60)))
-
-	
-
 	
 
 	

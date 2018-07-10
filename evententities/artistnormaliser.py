@@ -14,6 +14,8 @@ class BaseNormaliser:
 		# lower case, replace separators and quotes with white spaces, remove all brackets
 		# then all spelled numbers to numbers, then and -> &, make all white spaces single and strip
 
+		s = self.deabbreviate(s.lower())
+
 		return re.sub(r'\s{2,}', ' ', self.spelledout_numbers_to_numbers(re.sub(r'[\[\]\{\}\(\)]','', 
 						re.sub(r'[_\-:;/.,\"\`\']', ' ', s.lower()))).replace(' and ',' & ')).strip()
 
@@ -59,6 +61,49 @@ class BaseNormaliser:
 		
 		return s
 
+	def deabbreviate(self, st):
+		"""
+		unfold abbreviations in string st
+		"""
+		abbrs = {'gws': 'greater western sydney giants',
+				 'gwsg': 'greater western sydney giants',
+				 'afl': 'australian football league',
+				 'nrc': 'national rugby championship',
+				 'nrl': 'national rugby league',
+				 'syd': 'sydney',
+				 'mel': 'melbourne',
+				 'melb': 'melbourne',
+				 'bris': 'brisbane',
+				 'brisb': 'brisbane',
+				 'gc': 'gold coast',
+				 'adel': 'adelaide',
+				 'canb': 'canberra',
+				 'mt': 'mount',
+				 'utd': 'united',
+				 'cty': 'city',
+				 'fc': 'football club',
+				 'snr': 'senior',
+				 'jr': 'junion',
+				 'nsw': 'new south wales' ,
+				 'vic': 'victoria',
+				 'tas' : 'tasmania',
+				 'sa': 'south australia',
+				 'wa': 'western australia',
+				 'act': 'australian capital territory',
+				 'nt': 'northern territory',
+				 'qld': 'queensland',
+				 'champs': 'championships', 
+				 'champ': 'championship', 
+				 'intl': 'international', 
+				 'int': 'international', 
+				 'aust': 'australian'}
+
+		# first replace full state names by abbreviations;
+		for ab in abbrs:
+			st = re.sub(r'\b' + ab + r'\b', abbrs[ab], st)
+
+		return st
+
 
 class ArtistNameNormaliser(BaseNormaliser):
 
@@ -94,4 +139,6 @@ if __name__ == '__main__':
 
 	an = ArtistNameNormaliser()
 
-	print(an.normalize('the    rolling_stonES! :) ? ...      twenty two'))
+	print(an.deabbreviate('BRIS concert and afl show'))
+
+	print(an.normalize('the    rolling_stonES! :) ? ...      twenty two --GWS play sydNEY fc in bris qld'))
